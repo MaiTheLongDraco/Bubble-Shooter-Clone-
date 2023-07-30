@@ -18,6 +18,9 @@ public class BoardManager : MonoBehaviour
     {
         Instance = this;
     }
+    private void Reset()
+    {
+    }
     private void Start()
     {
         ReadDataFromFile(data);
@@ -25,35 +28,16 @@ public class BoardManager : MonoBehaviour
 
     public void HandleCreateBall(int number, int i, int j)
     {
+        var index = RowHolder.rows[i].intItem[j];
         var transform = RowHolder.rows[i].item_row[j].position;
-        switch (number)
+        switch (number == index)
         {
-            case 1:
+            case true:
                 {
-                    CreateBall(0, transform);
+                    CreateBall(number - 1, transform);
+                    break;
                 }
-                break;
-            case 2:
-                {
-                    CreateBall(1, transform);
-                }
-                break;
-            case 3:
-                {
-                    CreateBall(2, transform);
-                }
-                break;
-            case 4:
-                {
-                    CreateBall(3, transform);
-                }
-                break;
-            case 5:
-                {
-                    CreateBall(4, transform);
-                }
-                break;
-
+            case false: { break; }
         }
     }
     public void ReadDataFromFile(TextAsset csv)
@@ -75,7 +59,6 @@ public class BoardManager : MonoBehaviour
             for (int j = 0; j < csvData[i].Count; j++)
             {
                 stringBuilder.Append(csvData[i][j] + ", ");
-                rowHolder.rows[i].intItem[j] = int.Parse(csvData[i][j]);
                 Debug.Log($" csv data {i} - {j}: {csvData[i][j]}");
                 if (string.IsNullOrEmpty(csvData[i][j]))
                 {
@@ -97,8 +80,8 @@ public class BoardManager : MonoBehaviour
         RowHolder.rows.RemoveAt(row - 1);
         Debug.Log(stringBuilder.ToString());
     }
-    private void CreateBall(int index, Vector3 transform)
+    private void CreateBall(int ballIndex, Vector3 transform)
     {
-        Instantiate(ballTest[index], transform, Quaternion.identity);
+        Instantiate(ballTest[ballIndex], transform, Quaternion.identity);
     }
 }
