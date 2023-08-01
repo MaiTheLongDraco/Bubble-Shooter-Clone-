@@ -6,6 +6,7 @@ public class BallShooting : MonoBehaviour
 {
     // Start is called before the first frame update
     private Vector3 direction;
+    public BallHolderType ballHolderType;
     void Start()
     {
 
@@ -18,6 +19,8 @@ public class BallShooting : MonoBehaviour
     }
     private void ShowShootDirection()
     {
+        if (ballHolderType != BallHolderType.MAINBALL)
+            return;
         var firstPos = GetInput.GetMouseInput();
         if (!IsPosValid(firstPos)) return;
         direction = firstPos - transform.position;
