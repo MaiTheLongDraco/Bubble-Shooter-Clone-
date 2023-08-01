@@ -9,6 +9,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] private RowHolder rowHolder;
     [SerializeField] private List<GameObject> ballTest;
     [SerializeField] private TextAsset data;
+    [SerializeField] private GameObject ballParent;
 
     public static BoardManager Instance;
 
@@ -82,6 +83,7 @@ public class BoardManager : MonoBehaviour
     }
     private void CreateBall(int ballIndex, Vector3 transform)
     {
-        Instantiate(ballTest[ballIndex], transform, Quaternion.identity);
+        var ball = Instantiate(ballTest[ballIndex], transform, Quaternion.identity);
+        ball.transform.SetParent(ballParent.transform);
     }
 }
