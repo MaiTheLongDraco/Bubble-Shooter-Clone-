@@ -8993,9 +8993,14 @@ MonoBehaviour:
   - {fileID: 751720758080972838, guid: ac23789d02fb1794eb766506697b171c, type: 3}
   - {fileID: 6349769940017969025, guid: aa6ca2e89e8366e459dea862ed7aa84d, type: 3}
   - {fileID: 3761751206535438668, guid: 515f8176b215f0b43af916a4cfb748a7, type: 3}
+  listBallHolder:
+  - BallShooting: {fileID: 0}
+    BallTranform: {fileID: 1224573924}
+  - BallShooting: {fileID: 0}
+    BallTranform: {fileID: 595037945}
   mainTranform: {fileID: 1224573924}
   minorTranform: {fileID: 595037945}
-  swapTime: 1
+  distance: 0
 --- !u!1001 &1281115202
 PrefabInstance:
   m_ObjectHideFlags: 0

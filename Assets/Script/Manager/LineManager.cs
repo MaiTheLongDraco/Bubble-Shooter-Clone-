@@ -13,7 +13,7 @@ public class LineManager : MonoBehaviour
     void Start()
     {
         DirectionLine = GetComponentInChildren<DirectionLine>();
-        SetOriginForLine(BallHolderManger.Instance.MainBallShooting.transform.position);
+        //        SetOriginForLine(BallHolderManger.Instance.MainBallShooting.transform.position);
     }
     private void Awake()
     {
@@ -25,6 +25,7 @@ public class LineManager : MonoBehaviour
     {
 
     }
+
     public void SetOriginForLine(Vector3 originalPos)
     {
         AddNewPointToLine(originalPos);

@@ -19,6 +19,10 @@ public class DirectionLine : MonoBehaviour
     {
 
     }
+    public void ResetLine()
+    {
+        line.positionCount = 0;
+    }
     public void AddNewPointToLine(Vector3 newPoint)
     {
         Line.positionCount++;

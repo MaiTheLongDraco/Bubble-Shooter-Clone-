@@ -60,7 +60,7 @@ public class BoardManager : MonoBehaviour
             for (int j = 0; j < csvData[i].Count; j++)
             {
                 stringBuilder.Append(csvData[i][j] + ", ");
-                Debug.Log($" csv data {i} - {j}: {csvData[i][j]}");
+                //Debug.Log($" csv data {i} - {j}: {csvData[i][j]}");
                 if (string.IsNullOrEmpty(csvData[i][j]))
                 {
                     colum++;
@@ -84,6 +84,7 @@ public class BoardManager : MonoBehaviour
     private void CreateBall(int ballIndex, Vector3 transform)
     {
         var ball = Instantiate(ballTest[ballIndex], transform, Quaternion.identity);
+        ball.gameObject.tag = "Ball";
         ball.transform.SetParent(ballParent.transform);
     }
 }
