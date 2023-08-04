@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public class BallHolderManger : MonoBehaviour
 {
     public static BallHolderManger Instance;

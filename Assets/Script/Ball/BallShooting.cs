@@ -9,6 +9,7 @@ public class BallShooting : MonoBehaviour
     public BallHolderType ballHolderType;
     private Rigidbody2D rb;
     [SerializeField] private CircleCollider2D collider2D;
+    private SpriteRenderer spriteRenderer;
     private bool isShoot;
 
     public BallShooting(bool isShoot)
@@ -23,6 +24,7 @@ public class BallShooting : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         rb.gravityScale = 0;
         collider2D = GetComponent<CircleCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -39,8 +41,28 @@ public class BallShooting : MonoBehaviour
         direction = firstPos - transform.position;
         direction.z = 0;
         Debug.DrawRay(transform.position, Direction, Color.green);
-        GetInput.CheckHit(transform.position, direction, 100);
+        CheckHit(new Vector2(transform.position.x, transform.position.y + spriteRenderer.bounds.size.y), direction, 100);
         Shoot(direction);
+    }
+    public void CheckHit(Vector3 ballPos, Vector3 direction, float distance)
+    {
+        if (GetInput.IsMousePress())
+        {
+            RaycastHit2D hit2D = Physics2D.Raycast(ballPos, direction, distance);
+            if (Physics2D.Raycast(ballPos, direction, distance))
+            {
+                if (hit2D.collider.tag != "Ball")
+                {
+                    Debug.Log("hit other");
+                }
+                else
+                {
+                    Debug.Log($"hit ball {hit2D.collider.name}");
+                }
+
+            }
+
+        }
     }
 
     private void Shoot(Vector3 direction)
@@ -77,9 +99,15 @@ public class BallShooting : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.collider.tag == "Ball")
+        if (other.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
+            Debug.Log("collide with matrix ball");
             rb.isKinematic = true;
+        }
+        else
+        {
+            direction = new Vector2(-direction.y, direction.x);
+            rb.AddForce(direction * 100f);
         }
     }
 }
