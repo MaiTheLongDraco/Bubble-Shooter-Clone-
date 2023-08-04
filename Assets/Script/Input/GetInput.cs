@@ -13,26 +13,7 @@ public class GetInput : MonoBehaviour
         }
         return firstPos;
     }
-    public static void CheckHit(Vector3 ballPos, Vector3 direction, float distance)
-    {
-        if (IsMousePress())
-        {
-            RaycastHit2D hit2D = Physics2D.Raycast(ballPos, direction, distance);
-            if (Physics2D.Raycast(ballPos, direction, Mathf.Infinity))
-            {
 
-                if (hit2D.collider.CompareTag("Ball"))
-                {
-                    Utilities.Log($"hit ball {hit2D.collider.name}");
-                }
-                else
-                {
-                    Utilities.Log($"hit other {hit2D.collider.name}");
-                }
-            }
-            else Utilities.Log("doesnt hit");
-        }
-    }
     public static bool IsMousePress()
     {
         if (Input.GetMouseButton(0)) return true;
