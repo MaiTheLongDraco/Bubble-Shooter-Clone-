@@ -8,10 +8,11 @@ public class BallShooting : MonoBehaviour
     private Vector3 direction;
     public BallHolderType ballHolderType;
     private Rigidbody2D rb;
-    [SerializeField] private CircleCollider2D collider2D;
+    [SerializeField] private float bounceForce;
     private SpriteRenderer spriteRenderer;
-    private bool isShoot;
-
+    private LineManager lineManager;
+    private bool hasHit;
+    private float Count;
     public BallShooting(bool isShoot)
     {
 
@@ -20,17 +21,22 @@ public class BallShooting : MonoBehaviour
 
     void Start()
     {
+        Count = 5;
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0, 0);
         rb.gravityScale = 0;
-        collider2D = GetComponent<CircleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        bounceForce = 400f;
+        //        lineManager.SetOriginForLine(transform.position);
+    }
+    private void Awake()
+    {
+        lineManager = FindObjectOfType<LineManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // ShowShootDirection();
     }
     public void ShowShootDirection()
     {
@@ -46,31 +52,41 @@ public class BallShooting : MonoBehaviour
     }
     public void CheckHit(Vector3 ballPos, Vector3 direction, float distance)
     {
+        hasHit = false;
+        if (Count < -1000) return;
         if (GetInput.IsMousePress())
         {
             RaycastHit2D hit2D = Physics2D.Raycast(ballPos, direction, distance);
-            if (Physics2D.Raycast(ballPos, direction, distance))
+            if (hit2D)
             {
                 if (hit2D.collider.tag != "Ball")
                 {
+                    Count--;
+                    hasHit = true;
                     Debug.Log("hit other");
+                    if (hit2D.collider == null) return;
+                    Vector2 normal = hit2D.normal;
+                    Vector2 newDirection = Vector2.Reflect(direction, normal);
+                    Debug.Log($" Count {Count}");
+                    Debug.DrawRay(hit2D.point, newDirection, Color.green);
+                    // hit2D = Physics2D.Raycast(hit2D.point, newDirection, distance);
+                    //CheckHit(hit2D.point - new Vector2(0.001f, 0), newDirection, distance);
                 }
                 else
                 {
+                    //lineManager.AddNewPointToLine(hit2D.point);
                     Debug.Log($"hit ball {hit2D.collider.name}");
                 }
 
             }
-
         }
     }
-
     private void Shoot(Vector3 direction)
     {
         if (Input.GetMouseButtonUp(0))
         {
             rb.isKinematic = false;
-            rb.AddForce(direction * 100f);
+            rb.AddForce(direction * bounceForce);
             ballHolderType = BallHolderType.NONE;
         }
     }
@@ -106,8 +122,12 @@ public class BallShooting : MonoBehaviour
         }
         else
         {
-            direction = new Vector2(-direction.y, direction.x);
-            rb.AddForce(direction * 100f);
+            // direction = new Vector2(-direction.y, direction.x);
+            Debug.Log($"original dir {direction}");
+            Vector2 inNormal = other.contacts[0].normal;
+            direction = Vector2.Reflect(direction, inNormal);
+            Debug.Log($"reflex dir {direction}");
+            rb.AddForce(direction * bounceForce);
         }
     }
 }

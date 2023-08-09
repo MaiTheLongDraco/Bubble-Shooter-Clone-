@@ -17,7 +17,7 @@ public class DrawDirectionLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DrawWithDirection();
+        // DrawWithDirection();
     }
     private void DrawWithDirection()
     {
