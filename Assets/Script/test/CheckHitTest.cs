@@ -77,8 +77,6 @@ namespace Test
                             return;
                         }
                         index++;
-                        //Debug.DrawRay(hit2D.point, newDirection, Color.red);
-                        if (!hit2D.collider.CompareTag("Limit")) return;
                         CheckHit(hit2D.point - vectorDistance / hit2D.point, newDirection, distance);
                     }
 
