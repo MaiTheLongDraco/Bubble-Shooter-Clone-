@@ -86,7 +86,7 @@ public class BallShooting : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             rb.isKinematic = false;
-            rb.AddForce(direction * bounceForce);
+            rb.AddForce(direction.normalized * bounceForce);
             ballHolderType = BallHolderType.NONE;
         }
     }
