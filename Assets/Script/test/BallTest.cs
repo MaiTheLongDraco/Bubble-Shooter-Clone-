@@ -35,6 +35,10 @@ namespace Test
         {
             line.SetColors(lineColor, lineColor);
         }
+        public void SetLastPointForLine(Vector2 lastPoint)
+        {
+            line.SetPosition(line.positionCount - 1, lastPoint);
+        }
         public void SetPos(int index, Vector2 pos)
         {
             line.SetPosition(index, pos);

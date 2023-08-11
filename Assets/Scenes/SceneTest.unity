@@ -690,7 +690,7 @@ GameObject:
   - component: {fileID: 275877715}
   - component: {fileID: 275877714}
   - component: {fileID: 275877713}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: limit (3)
   m_TagString: DownLimit
   m_Icon: {fileID: 0}
@@ -2429,6 +2429,7 @@ MonoBehaviour:
   - {fileID: 1970870735}
   - {fileID: 1527893616}
   test: {fileID: 267563269}
+  listHitPos: []
 --- !u!4 &1978519590
 Transform:
   m_ObjectHideFlags: 0
