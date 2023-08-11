@@ -16,6 +16,7 @@ namespace Test
         private BallShooting ballShooting;
         [SerializeField] private List<GameObject> listIcon;
         int index = 1;
+        private Vector2 recursiveStartPoint;
         // Start is called before the first frame update
         void Start()
         {
@@ -49,7 +50,7 @@ namespace Test
                 if (hit2D)
                 {
                     ballTest.SetPosForListLine(0, ballPos, hit2D.point);
-
+                    recursiveStartPoint = hit2D.point - vectorDistance / hit2D.point;
                     if (hit2D.collider.tag == "Ball")
                     {
                         // ballTest.SetPos(index, hit2D.point);
@@ -68,7 +69,7 @@ namespace Test
                         {
                             var targetNornal = Vector2.down;
                             float cosAngle = Vector3.Dot(normal.normalized, targetNornal.normalized);
-
+                            recursiveStartPoint = hit2D.point - new Vector2(0, 0.1f);
                             if (!Mathf.Approximately(cosAngle, 1f))
                             {
                                 normal = targetNornal;
@@ -100,7 +101,7 @@ namespace Test
                             return;
                         }
                         index++;
-                        CheckHit(hit2D.point - vectorDistance / hit2D.point, newDirection, distance);
+                        CheckHit(recursiveStartPoint, newDirection, distance);
                     }
 
                 }
