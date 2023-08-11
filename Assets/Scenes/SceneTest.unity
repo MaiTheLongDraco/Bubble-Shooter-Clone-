@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 245675399}
   - component: {fileID: 245675398}
   - component: {fileID: 245675397}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: limit (2)
   m_TagString: UpLimit
   m_Icon: {fileID: 0}
@@ -579,7 +579,7 @@ GameObject:
   - component: {fileID: 267563269}
   - component: {fileID: 267563268}
   - component: {fileID: 267563267}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: limit (1)
   m_TagString: Limit
   m_Icon: {fileID: 0}
@@ -690,7 +690,7 @@ GameObject:
   - component: {fileID: 275877715}
   - component: {fileID: 275877714}
   - component: {fileID: 275877713}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: limit (3)
   m_TagString: DownLimit
   m_Icon: {fileID: 0}
@@ -1311,7 +1311,7 @@ GameObject:
   - component: {fileID: 1249802062}
   - component: {fileID: 1249802061}
   - component: {fileID: 1249802060}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: limit
   m_TagString: Limit
   m_Icon: {fileID: 0}
@@ -2416,13 +2416,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 481e879f111d9fb43a085617ad921209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onHit:
-    m_PersistentCalls:
-      m_Calls: []
   shootPoint: {fileID: 1596567053}
   ballPosMain: {x: 0, y: 0}
   vectorDistance: {x: 0.001, y: 0}
-  ballShooting: {fileID: 0}
   listIcon:
   - {fileID: 325568989}
   - {fileID: 933481477}
@@ -2432,6 +2428,7 @@ MonoBehaviour:
   - {fileID: 194021363}
   - {fileID: 1970870735}
   - {fileID: 1527893616}
+  test: {fileID: 267563269}
 --- !u!4 &1978519590
 Transform:
   m_ObjectHideFlags: 0

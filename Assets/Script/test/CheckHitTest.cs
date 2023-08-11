@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 namespace Test
 {
     using System.Collections;
@@ -7,19 +8,20 @@ namespace Test
 
     public class CheckHitTest : MonoBehaviour
     {
-        [SerializeField] private UnityEvent onHit;
         [SerializeField] GameObject shootPoint;
         [SerializeField] private Vector2 ballPosMain;
         private BallTest ballTest;
         [SerializeField] private Vector2 vectorDistance;
-        [SerializeField]
-        private BallShooting ballShooting;
         [SerializeField] private List<GameObject> listIcon;
+        [SerializeField] private Transform test;
         int index = 1;
         private Vector2 recursiveStartPoint;
+        private string[] startLayerMask = { "UpLimit", "RightLimit", "LeftLimit" };
+        private LayerMask layerMask1;
         // Start is called before the first frame update
         void Start()
         {
+            layerMask1 = LayerMask.GetMask(startLayerMask);
             ballTest = FindObjectOfType<BallTest>();
             ballPosMain = shootPoint.transform.position;
             SetActiveIcon(false);
@@ -38,17 +40,25 @@ namespace Test
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = mousePos - ballPosMain;
-            CheckHit(ballPosMain, direction, 10);
+
+            CheckHit(ballPosMain, direction, 100, layerMask1);
         }
-        public void CheckHit(Vector3 ballPos, Vector3 direction, float distance)
+        private void AddLayerMaskArray()
+        {
+            startLayerMask.SetValue("UpLimit", 0);
+            startLayerMask.SetValue("RightLimit", 1);
+            startLayerMask.SetValue("LeftLimit", 2);
+        }
+        public void CheckHit(Vector2 ballPos, Vector2 direction, float distance, LayerMask layerHit)
         {
             if (GetInput.IsMousePress())
             {
                 ballTest.DeclareLine();
                 // ballTest.SetPos(0, ballPosMain);
-                RaycastHit2D hit2D = Physics2D.Raycast(ballPos, direction, distance);
+                RaycastHit2D hit2D = Physics2D.Raycast(ballPos, direction, distance, layerHit);
                 if (hit2D)
                 {
+                    Debug.Log($"hit2D tag {hit2D.collider.tag} ------ hit2D.point {hit2D.point}");
                     ballTest.SetPosForListLine(0, ballPos, hit2D.point);
                     recursiveStartPoint = hit2D.point - vectorDistance / hit2D.point;
                     if (hit2D.collider.tag == "Ball")
@@ -101,7 +111,7 @@ namespace Test
                             return;
                         }
                         index++;
-                        CheckHit(recursiveStartPoint, newDirection, distance);
+                        CheckHit(recursiveStartPoint, newDirection, distance, layerHit);
                     }
 
                 }
