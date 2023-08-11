@@ -2421,7 +2421,7 @@ MonoBehaviour:
       m_Calls: []
   shootPoint: {fileID: 1596567053}
   ballPosMain: {x: 0, y: 0}
-  vectorDistance: {x: 0.3, y: 0}
+  vectorDistance: {x: 0.001, y: 0}
   ballShooting: {fileID: 0}
   listIcon:
   - {fileID: 325568989}
