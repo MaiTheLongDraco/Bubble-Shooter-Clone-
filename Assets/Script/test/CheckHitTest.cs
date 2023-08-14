@@ -34,11 +34,6 @@ namespace Test
         {
             Instance = this;
         }
-        private void SetActiveIcon(bool isActive)
-        {
-            listIcon.ForEach(icon => icon.gameObject.SetActive(isActive));
-        }
-
         // Update is called once per frame
         void Update()
         {
@@ -48,7 +43,7 @@ namespace Test
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = mousePos - ballPosMain;
-            SetActiveIcon(true);
+            ballTest.DeclareLine();
             CheckHit(ballPosMain, direction, 100, layerMask1);
         }
         public void CheckHit(Vector2 ballPos, Vector2 direction, float distance, LayerMask layerHit)
@@ -56,11 +51,12 @@ namespace Test
             if (GetInput.IsMousePress())
             {
                 RaycastHit2D hit2D = Physics2D.Raycast(ballPos, direction, distance, layerHit);
-                ballTest.DeclareLine();
-                SetActiveIcon(true);
-                ballTest.SetPos(0, ballPos);
+                //   ballTest.SetPos(0, ballPos);
                 HandleHit(hit2D, ballPos, direction, distance, layerHit);
-                ResetIndex();
+            }
+            else
+            {
+                EndCheck();
             }
         }
         private void HandleHit(RaycastHit2D hit2D, Vector2 ballPos, Vector2 direction, float distance, LayerMask layerHit)
@@ -72,26 +68,35 @@ namespace Test
             Debug.DrawRay(ballPos, direction);
             switch (hitObjTag)
             {
-                case "UpLimit":
-                    {
-                        AddPoint(hit2D.point);
-                    }
-                    break;
                 case "DownLimit":
                     {
-                        SetLastPoint(hit2D.point);
+                        //SetLastPoint(hit2D.point);
+                        SetActiveICon(true, hit2D.point);
+                        Debug.DrawRay(hit2D.point, normal, Color.cyan);
+                        Debug.Log(" hit down limit vvvv");
+                    }
+                    break;
+                case "UpLimit":
+                    {
+                        normal = Vector2.down;
+                        Debug.DrawRay(hit2D.point, newDirection, Color.cyan);
                     }
                     break;
                 default:
                     {
-                        listIcon[index].transform.position = hit2D.point;
+                        normal = Vector2.right;
+                        Debug.DrawRay(hit2D.point, normal, Color.black);
+                        Debug.DrawRay(hit2D.point, newDirection, Color.yellow);
+                        listIcon[index - 1].transform.position = hit2D.point;
                         if (CheckLineContainPos(hit2D.point))
                             return;
-                        CheckHit(ballPos, newDirection, distance, layerHit);
+                        if (IsOverIndex())
+                            return;
+                        CheckHit(hit2D.point, newDirection, distance, layerHit);
+                        Debug.Log(" hit left or right limit vvvv");
                     }
                     break;
             }
-            EndCheck();
         }
         private void EndCheck()
         {
@@ -103,7 +108,8 @@ namespace Test
         void AddPoint(Vector3 point)
         {
             SetActiveICon(true, point);
-            ballTest.SetPos(index, point);
+            ballTest.SetPos(index - 1, point);
+            print($"index {index}");
             listIcon[index - 1].transform.position = point;
         }
         void SetLastPoint(Vector2 point)
@@ -111,16 +117,26 @@ namespace Test
             SetActiveICon(true, point);
             ballTest.SetLastPointForLine(point);
         }
+        private void SetActiveIcon(bool isActive)
+        {
+            listIcon.ForEach(icon => icon.gameObject.SetActive(isActive));
+        }
         void SetActiveICon(bool isActive, Vector2 point)
         {
             listIcon[index - 1].gameObject.SetActive(isActive);
             listIcon[index - 1].transform.position = point;
         }
-        private void ResetIndex()
+        private bool IsOverIndex()
         {
-            index++;
-            if (index > ballTest.Line.positionCount - 1)
-            { index = 1; }
+            if (index >= ballTest.Line.positionCount - 1)
+            {
+                index = 1;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         private bool CheckLineContainPos(Vector2 pos)
         {
@@ -130,7 +146,7 @@ namespace Test
             }
             else
             {
-                AddPoint(pos);
+                //AddPoint(pos);
                 return false;
             }
         }
