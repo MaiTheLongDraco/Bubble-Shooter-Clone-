@@ -8,6 +8,8 @@ TagManager:
   - Limit
   - DownLimit
   - UpLimit
+  - RightLimit
+  - LeftLimit
   layers:
   - Default
   - TransparentFX

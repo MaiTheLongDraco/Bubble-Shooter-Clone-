@@ -76,12 +76,6 @@ namespace Test
                         Debug.Log(" hit down limit vvvv");
                     }
                     break;
-                case "UpLimit":
-                    {
-                        normal = Vector2.down;
-                        Debug.DrawRay(hit2D.point, newDirection, Color.cyan);
-                    }
-                    break;
                 default:
                     {
                         normal = Vector2.right;
@@ -92,12 +86,36 @@ namespace Test
                             return;
                         if (IsOverIndex())
                             return;
+                        layerHit = HandleTag(layerHit, hitObjTag);
                         CheckHit(hit2D.point, newDirection, distance, layerHit);
                         Debug.Log(" hit left or right limit vvvv");
                     }
                     break;
             }
         }
+
+        private LayerMask HandleTag(LayerMask layerHit, string hitObjTag)
+        {
+            if (hitObjTag == "UpLimit")
+            {
+                layerHit = LayerMask.GetMask(new string[] { "DownLimit", "RightLimit", "LeftLimit" });
+            }
+            if (hitObjTag == "DownLimit")
+            {
+                layerHit = LayerMask.GetMask(new string[] { "UpLimit", "RightLimit", "LeftLimit" });
+            }
+            if (hitObjTag == "RightLimit")
+            {
+                layerHit = LayerMask.GetMask(new string[] { "UpLimit", "DownLimit", "LeftLimit" });
+            }
+            if (hitObjTag == "LeftLimit")
+            {
+                layerHit = LayerMask.GetMask(new string[] { "UpLimit", "DownLimit", "RightLimit" });
+            }
+
+            return layerHit;
+        }
+
         private void EndCheck()
         {
             ballTest.ResetLine();
@@ -135,6 +153,7 @@ namespace Test
             }
             else
             {
+                index++;
                 return false;
             }
         }
