@@ -2,24 +2,17 @@ using System.Numerics;
 using System.Collections.Generic;
 namespace Test
 {
-    using System.Collections;
     using UnityEngine;
-    using UnityEngine.Events;
     using System.Collections.Generic;
+    using System.IO.Compression;
 
     public class CheckHitTest : MonoBehaviour
     {
         [SerializeField] GameObject shootPoint;
-        [SerializeField] private Vector2 ballPosMain;
         private BallTest ballTest;
-        [SerializeField] private Vector2 vectorDistance;
         [SerializeField] private List<GameObject> listIcon;
-        [SerializeField] private Transform test;
-        [SerializeField] private List<Vector3> listHitPos = new List<Vector3>();
         public static CheckHitTest Instance;
-        public List<Vector3> ListHitPos { get => listHitPos; set => listHitPos = value; }
         int index = 1;
-        private Vector2 recursiveStartPoint;
         private string[] startLayerMask = { "UpLimit", "RightLimit", "LeftLimit", "DownLimit" };
         private LayerMask layerMask1;
         // Start is called before the first frame update
@@ -27,7 +20,6 @@ namespace Test
         {
             layerMask1 = LayerMask.GetMask(startLayerMask);
             ballTest = FindObjectOfType<BallTest>();
-            ballPosMain = shootPoint.transform.position;
             SetActiveIcon(false);
         }
         private void Awake()
@@ -42,16 +34,16 @@ namespace Test
         public void ClickHandle()
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 direction = mousePos - ballPosMain;
-            ballTest.DeclareLine();
-            CheckHit(ballPosMain, direction, 100, layerMask1);
+            Vector2 direction = mousePos - (Vector2)shootPoint.transform.position;
+            CheckHit(shootPoint.transform.position, direction.normalized, 100, layerMask1);
         }
         public void CheckHit(Vector2 ballPos, Vector2 direction, float distance, LayerMask layerHit)
         {
             if (GetInput.IsMousePress())
             {
                 RaycastHit2D hit2D = Physics2D.Raycast(ballPos, direction, distance, layerHit);
-                //   ballTest.SetPos(0, ballPos);
+                ballTest.DeclareLine();
+                ballTest.SetPos(0, shootPoint.transform.position);
                 HandleHit(hit2D, ballPos, direction, distance, layerHit);
             }
             else
@@ -70,7 +62,7 @@ namespace Test
             {
                 case "DownLimit":
                     {
-                        //SetLastPoint(hit2D.point);
+                        SetLastPoint(hit2D.point);
                         SetActiveICon(true, hit2D.point);
                         Debug.DrawRay(hit2D.point, normal, Color.cyan);
                         Debug.Log(" hit down limit vvvv");
@@ -125,6 +117,7 @@ namespace Test
 
         void AddPoint(Vector3 point)
         {
+            if (index - 1 == 0) return;
             SetActiveICon(true, point);
             ballTest.SetPos(index - 1, point);
             print($"index {index}");
@@ -146,7 +139,7 @@ namespace Test
         }
         private bool IsOverIndex()
         {
-            if (index >= ballTest.Line.positionCount - 1)
+            if (index > ballTest.Line.positionCount - 1)
             {
                 index = 1;
                 return true;
@@ -165,7 +158,7 @@ namespace Test
             }
             else
             {
-                //AddPoint(pos);
+                AddPoint(pos);
                 return false;
             }
         }

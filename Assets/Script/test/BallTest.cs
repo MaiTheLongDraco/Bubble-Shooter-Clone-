@@ -15,8 +15,6 @@ namespace Test
         void Start()
         {
             line = GetComponent<LineRenderer>();
-            // line.positionCount = 5;
-            // line.SetPosition(0, transform.position);
             SetActiveListLine(false);
             InitalListLine();
         }
