@@ -117,9 +117,9 @@ namespace Test
 
         void AddPoint(Vector3 point)
         {
-            if (index - 1 == 0) return;
+            if (index > ballTest.Line.positionCount - 1) return;
             SetActiveICon(true, point);
-            ballTest.SetPos(index - 1, point);
+            ballTest.SetPos(index, point);
             print($"index {index}");
             listIcon[index - 1].transform.position = point;
         }
