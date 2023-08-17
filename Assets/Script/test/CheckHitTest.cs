@@ -1,11 +1,10 @@
+using System.ComponentModel;
 using System.Numerics;
 using System.Collections.Generic;
 namespace Test
 {
     using UnityEngine;
     using System.Collections.Generic;
-    using System.IO.Compression;
-
     public class CheckHitTest : MonoBehaviour
     {
         [SerializeField] GameObject shootPoint;
@@ -15,6 +14,7 @@ namespace Test
         int index = 1;
         private string[] startLayerMask = { "UpLimit", "RightLimit", "LeftLimit", "DownLimit" };
         private LayerMask layerMask1;
+        [SerializeField] private List<Vector2> listHitPoint = new List<Vector2>();
         // Start is called before the first frame update
         void Start()
         {
@@ -56,13 +56,15 @@ namespace Test
             var hitObjTag = hit2D.collider.tag;
             var normal = hit2D.normal;
             var newDirection = Vector2.Reflect(direction, normal);
-            Debug.Log($"index {index}");
             Debug.DrawRay(ballPos, direction);
             switch (hitObjTag)
             {
                 case "DownLimit":
                     {
-                        SetLastPoint(hit2D.point);
+                        AddPoint(hit2D.point);
+                        if (listHitPoint.Contains(hit2D.point))
+                            return;
+                        listHitPoint.Add(hit2D.point);
                         SetActiveICon(true, hit2D.point);
                         Debug.DrawRay(hit2D.point, normal, Color.cyan);
                         Debug.Log(" hit down limit vvvv");
@@ -70,12 +72,17 @@ namespace Test
                     break;
                 default:
                     {
-                        normal = Vector2.right;
+                        print($"index {index}");
+
                         Debug.DrawRay(hit2D.point, normal, Color.black);
                         Debug.DrawRay(hit2D.point, newDirection, Color.yellow);
                         listIcon[index - 1].transform.position = hit2D.point;
-                        if (CheckLineContainPos(hit2D.point))
+                        // if (CheckLineContainPos(hit2D.point))
+                        //     return;
+                        if (listHitPoint.Contains(hit2D.point))
                             return;
+                        listHitPoint.Add(hit2D.point);
+                        AddPoint(hit2D.point);
                         if (IsOverIndex())
                             return;
                         layerHit = HandleTag(layerHit, hitObjTag);
@@ -91,10 +98,6 @@ namespace Test
             if (hitObjTag == "UpLimit")
             {
                 layerHit = LayerMask.GetMask(new string[] { "DownLimit", "RightLimit", "LeftLimit" });
-            }
-            if (hitObjTag == "DownLimit")
-            {
-                layerHit = LayerMask.GetMask(new string[] { "UpLimit", "RightLimit", "LeftLimit" });
             }
             if (hitObjTag == "RightLimit")
             {
@@ -113,6 +116,7 @@ namespace Test
             ballTest.ResetLine();
             index = 1;
             SetActiveIcon(false);
+            listHitPoint.Clear();
         }
 
         void AddPoint(Vector3 point)
@@ -120,8 +124,6 @@ namespace Test
             if (index > ballTest.Line.positionCount - 1) return;
             SetActiveICon(true, point);
             ballTest.SetPos(index, point);
-            print($"index {index}");
-            listIcon[index - 1].transform.position = point;
         }
         void SetLastPoint(Vector2 point)
         {
@@ -134,8 +136,10 @@ namespace Test
         }
         void SetActiveICon(bool isActive, Vector2 point)
         {
+            var color = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.gray, Color.yellow, Color.green };
             listIcon[index - 1].gameObject.SetActive(isActive);
             listIcon[index - 1].transform.position = point;
+            listIcon[index - 1].GetComponent<SpriteRenderer>().color = color[index - 1];
         }
         private bool IsOverIndex()
         {

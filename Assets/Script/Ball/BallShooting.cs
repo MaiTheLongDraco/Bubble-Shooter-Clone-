@@ -10,7 +10,6 @@ public class BallShooting : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float bounceForce;
     private SpriteRenderer spriteRenderer;
-    private LineManager lineManager;
     private bool hasHit;
     private float Count;
     public BallShooting(bool isShoot)
@@ -31,7 +30,6 @@ public class BallShooting : MonoBehaviour
     }
     private void Awake()
     {
-        lineManager = FindObjectOfType<LineManager>();
     }
 
     // Update is called once per frame
@@ -88,6 +86,7 @@ public class BallShooting : MonoBehaviour
             rb.isKinematic = false;
             rb.AddForce(direction.normalized * bounceForce);
             ballHolderType = BallHolderType.NONE;
+            this.gameObject.AddComponent<CircleCollider2D>();
         }
     }
     public void SetNullSelf()
@@ -96,7 +95,6 @@ public class BallShooting : MonoBehaviour
     private void OnMouseEnter()
     {
         if (!IsMainBall()) return;
-        LineManager.Instance.DirectionLine.ResetLine();
     }
 
     private bool IsPosValid(Vector3 firstPos)

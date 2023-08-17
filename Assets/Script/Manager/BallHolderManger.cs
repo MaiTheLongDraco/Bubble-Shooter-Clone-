@@ -36,7 +36,6 @@ public class BallHolderManger : MonoBehaviour
     {
         LoadBallPosBall1();
         LoadBallPosBall2();
-        LineManager.Instance.SetOriginForLine(MainBallShooting.transform.position);
     }
     private void ShowShootDirection()
     {
@@ -80,10 +79,6 @@ public class BallHolderManger : MonoBehaviour
     private void SetParent(GameObject gameObject)
     {
         gameObject.transform.SetParent(this.transform);
-    }
-    private void RemoveCollider(GameObject gameObject)
-    {
-        gameObject.GetComponent<CircleCollider2D>().enabled = false;
     }
     public void SwapBall()
     {

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1934493786071302047}
   - component: {fileID: 2507810854985684932}
-  - component: {fileID: 6364565454443798557}
   m_Layer: 0
   m_Name: DrawLine
   m_TagString: Untagged
@@ -130,16 +129,3 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &6364565454443798557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6257139652615774667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef372980a45c60e49876ddba9eeeb282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  line: {fileID: 0}
