@@ -6,6 +6,7 @@ public class LineHandle : MonoBehaviour
 {
     [SerializeField] private LineRenderer line;
 
+    public LineRenderer Line { get => line; set => line = value; }
 
     private void Start()
     {

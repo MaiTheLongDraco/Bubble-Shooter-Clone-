@@ -12,6 +12,8 @@ public class BallShooting : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool hasHit;
     private float Count;
+    [SerializeField] private LineHandle lineHandle;
+    [SerializeField] private float followTIme;
     public BallShooting(bool isShoot)
     {
 
@@ -84,13 +86,18 @@ public class BallShooting : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             rb.isKinematic = false;
-            rb.AddForce(direction.normalized * bounceForce);
+            rb.AddForce(direction * bounceForce);
             ballHolderType = BallHolderType.NONE;
             this.gameObject.AddComponent<CircleCollider2D>();
         }
     }
-    public void SetNullSelf()
+    public void FollowLineDir()
     {
+        for (int i = 0; i < lineHandle.Line.positionCount - 1; i++)
+        {
+            var pos = lineHandle.Line.GetPosition(i);
+            transform.position = Vector2.Lerp(transform.position, pos, followTIme);
+        }
     }
     private void OnMouseEnter()
     {
@@ -120,7 +127,6 @@ public class BallShooting : MonoBehaviour
         }
         else
         {
-            // direction = new Vector2(-direction.y, direction.x);
             Debug.Log($"original dir {direction}");
             Vector2 inNormal = other.contacts[0].normal;
             direction = Vector2.Reflect(direction, inNormal);
