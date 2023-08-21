@@ -31,11 +31,12 @@ public class BoardManager : MonoBehaviour
     {
         var index = RowHolder.rows[i].intItem[j];
         var transform = RowHolder.rows[i].item_row[j].position;
+        MatrixBall matrixBall = new MatrixBall(new Vector2Int(i, j));
         switch (number == index)
         {
             case true:
                 {
-                    CreateBall(number - 1, transform);
+                    CreateBall(number - 1, transform, matrixBall);
                     break;
                 }
             case false: { break; }
@@ -45,12 +46,9 @@ public class BoardManager : MonoBehaviour
     {
         CsvReader csvReader = new CsvReader();
         List<List<string>> csvData = csvReader.ReadCsv(csv.text);
-
         int row = 0;
         int colum = 0;
-
         StringBuilder stringBuilder = new StringBuilder();
-
         for (int i = 0; i < csvData.Count; i++)
         {
             colum = 0;
@@ -81,11 +79,12 @@ public class BoardManager : MonoBehaviour
         RowHolder.rows.RemoveAt(row - 1);
         Debug.Log(stringBuilder.ToString());
     }
-    private void CreateBall(int ballIndex, Vector3 transform)
+    private void CreateBall(int ballIndex, Vector3 transform, MatrixBall matrixBall)
     {
         var ball = Instantiate(ballTest[ballIndex], transform, Quaternion.identity);
         ball.AddComponent<CircleCollider2D>();
         ball.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        ball.GetComponent<MatrixBall>().index = matrixBall.index;
         ball.gameObject.tag = "Ball";
         ball.transform.SetParent(ballParent.transform);
     }

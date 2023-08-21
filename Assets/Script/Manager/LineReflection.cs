@@ -30,10 +30,9 @@ public class LineReflection : MonoBehaviour
         RaycastHit2D hit2D = Physics2D.Raycast(orrigin, dirrection);
         if (hit2D)
         {
-            Debug.Log("hit ");
             DrawLine(orrigin, hit2D.point);
             var newDir = Vector2.Reflect(dirrection, hit2D.normal);
-            if (!IsMeetCondition(hit2D.collider.tag)) return;
+            if (!IsMeetCondition(hit2D.collider.tag, hit2D.collider.gameObject.GetComponent<MatrixBall>())) return;
             HitHandlle(hit2D.point - distance / hit2D.point, newDir, layerMask);
         }
         else
@@ -41,10 +40,11 @@ public class LineReflection : MonoBehaviour
             DrawLine(orrigin, dirrection * 100);
         }
     }
-    private bool IsMeetCondition(string tag)
+    private bool IsMeetCondition(string tag, MatrixBall matrixBall)
     {
         if (tag == "Ball")
         {
+            print($" index {matrixBall.index}");
             return false;
         }
 

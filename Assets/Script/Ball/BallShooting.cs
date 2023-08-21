@@ -41,8 +41,9 @@ public class BallShooting : MonoBehaviour
         {
             if (!IsMetCondition()) return;
             rb.isKinematic = false;
-            rb.AddForce(direction * _velocity);
+            rb.AddForce(direction.normalized * _velocity);
             ballHolderType = BallHolderType.NONE;
+            this.gameObject.AddComponent<CircleCollider2D>();
         }
     }
     private bool IsMetCondition()
