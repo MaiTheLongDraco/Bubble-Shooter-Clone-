@@ -84,6 +84,8 @@ public class BoardManager : MonoBehaviour
     private void CreateBall(int ballIndex, Vector3 transform)
     {
         var ball = Instantiate(ballTest[ballIndex], transform, Quaternion.identity);
+        ball.AddComponent<CircleCollider2D>();
+        ball.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         ball.gameObject.tag = "Ball";
         ball.transform.SetParent(ballParent.transform);
     }

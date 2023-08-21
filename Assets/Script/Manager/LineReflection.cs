@@ -5,6 +5,7 @@ public class LineReflection : MonoBehaviour
     [SerializeField] private Transform mainPos;
     [SerializeField] private Vector2 distance;
     private string[] startLayerMask = { "UpLimit", "RightLimit", "LeftLimit", "DownLimit" };
+    [SerializeField] private LineHandle lineHandle;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,11 +33,23 @@ public class LineReflection : MonoBehaviour
             Debug.Log("hit ");
             DrawLine(orrigin, hit2D.point);
             var newDir = Vector2.Reflect(dirrection, hit2D.normal);
-            if (hit2D.collider.tag == "DownLimit") return;
+            if (!IsMeetCondition(hit2D.collider.tag)) return;
             HitHandlle(hit2D.point - distance / hit2D.point, newDir, layerMask);
         }
+        else
+        {
+            DrawLine(orrigin, dirrection * 100);
+        }
     }
-    [SerializeField] private LineHandle lineHandle;
+    private bool IsMeetCondition(string tag)
+    {
+        if (tag == "Ball")
+        {
+            return false;
+        }
+
+        else return true;
+    }
     private void DrawLine(Vector2 origin, Vector2 next)
     {
         // Debug.DrawLine(orrigin, next);
@@ -46,6 +59,7 @@ public class LineReflection : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
+            lineHandle.AddPointToList();
             lineHandle.ResetLine();
         }
     }

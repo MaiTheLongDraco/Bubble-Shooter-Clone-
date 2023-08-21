@@ -12,9 +12,12 @@ public class BallHolderManger : MonoBehaviour
     [SerializeField] private Transform mainTranform;
     [SerializeField] private Transform minorTranform;
     [SerializeField] private float distance;
+    [SerializeField] private float ballSpeed;
 
     public BallShooting MainBallShooting { get => mainBallShooting; set => mainBallShooting = value; }
     public BallShooting MinorBallShooting { get => minorBallShooting; set => minorBallShooting = value; }
+    public Transform MainTranform { get => mainTranform; set => mainTranform = value; }
+
     private Vector3 direction;
 
 
@@ -49,7 +52,11 @@ public class BallHolderManger : MonoBehaviour
         var random = Random.Range(0, listBall.Count);
         ball1 = Instantiate(listBall[random], mainTranform.position, Quaternion.identity);
         SetParent(ball1);
+
         ball1.AddComponent<BallShooting>();
+        BallShooting ballShooting = ball1.GetComponent<BallShooting>();
+        ballShooting.SetBallVelocity(ballSpeed);
+
         MainBallShooting = ball1.GetComponent<BallShooting>();
         MainBallShooting.ballHolderType = BallHolderType.MAINBALL;
         Utilities.AddRigigBodyForBall(ball1);

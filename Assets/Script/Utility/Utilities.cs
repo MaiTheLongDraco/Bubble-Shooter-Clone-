@@ -33,4 +33,13 @@ public class Utilities : MonoBehaviour
         SetTypeForBall(ballShoot, ballObj, type);
         // Log($"ballShoot tranform {ballShoot.transform.position}");
     }
+    public static bool IsMousePosUnderMainBall()
+    {
+        if (GetInput.GetMouseInput().y < BallHolderManger.Instance.MainTranform.position.y)
+        {
+            LineHandle.Instance.ResetLine();
+            return false;
+        }
+        else return true;
+    }
 }
