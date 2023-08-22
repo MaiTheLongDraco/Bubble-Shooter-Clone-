@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Row
 {
-    public List<Transform> item_row;
+    public List<Transform> item_row_tranform;
     public List<int> intItem;
 }
 [Serializable]

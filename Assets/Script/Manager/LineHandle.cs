@@ -17,7 +17,6 @@ public class LineHandle : MonoBehaviour
     }
     public void ResetLine()
     {
-
         line.positionCount = 0;
     }
     public void AddPointToList()

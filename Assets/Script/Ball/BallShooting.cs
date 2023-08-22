@@ -10,6 +10,7 @@ public class BallShooting : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float _velocity;
     [SerializeField] private LineHandle lineHandle;
+    private MatrixBall matrixBall;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -80,8 +81,13 @@ public class BallShooting : MonoBehaviour
         if (other.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
             Debug.Log("collide with matrix ball");
-            rb.isKinematic = true;
+            var ballIndex = other.collider.GetComponent<MatrixBall>().index;
+            Debug.Log($"collide with index {ballIndex}");
+            // AddMatrixIndex()
         }
+    }
+    private void AddMatrixIndex(Vector2Int passIndex)
+    {
     }
 
     public void SetBallVelocity(float vel)

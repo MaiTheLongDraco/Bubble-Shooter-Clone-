@@ -10,17 +10,14 @@ public class BoardManager : MonoBehaviour
     [SerializeField] private List<GameObject> ballTest;
     [SerializeField] private TextAsset data;
     [SerializeField] private GameObject ballParent;
-
+    [SerializeField] private List<MatrixBall> listMatrix = new List<MatrixBall>();
     public static BoardManager Instance;
-
+    public List<MatrixBall> ListMatrixBall { get => listMatrix; set => listMatrix = value; }
     public RowHolder RowHolder { get => rowHolder; set => rowHolder = value; }
 
     private void Awake()
     {
         Instance = this;
-    }
-    private void Reset()
-    {
     }
     private void Start()
     {
@@ -30,7 +27,7 @@ public class BoardManager : MonoBehaviour
     public void HandleCreateBall(int number, int i, int j)
     {
         var index = RowHolder.rows[i].intItem[j];
-        var transform = RowHolder.rows[i].item_row[j].position;
+        var transform = RowHolder.rows[i].item_row_tranform[j].position;
         MatrixBall matrixBall = new MatrixBall(new Vector2Int(i, j));
         switch (number == index)
         {
@@ -85,6 +82,7 @@ public class BoardManager : MonoBehaviour
         ball.AddComponent<CircleCollider2D>();
         ball.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         ball.GetComponent<MatrixBall>().index = matrixBall.index;
+        listMatrix.Add(ball.GetComponent<MatrixBall>());
         ball.gameObject.tag = "Ball";
         ball.transform.SetParent(ballParent.transform);
     }
