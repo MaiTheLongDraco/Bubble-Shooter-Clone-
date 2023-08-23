@@ -80,7 +80,8 @@ public class LineReflection : MonoBehaviour
                     break;
                 case false:
                     {
-
+                        desireBallPos = matrixBall.GetAroundPos(1, 1);
+                        print($"downRight __ {desireBallPos}");
                     }
                     break;
             }

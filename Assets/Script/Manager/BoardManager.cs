@@ -49,7 +49,7 @@ public class BoardManager : MonoBehaviour
         for (int i = 0; i < csvData.Count; i++)
         {
             colum = 0;
-            rowHolder.rows.Add(new Row());
+            // rowHolder.rows.Add(new Row());
             stringBuilder.Append("|");
 
             for (int j = 0; j < csvData[i].Count; j++)
@@ -62,7 +62,7 @@ public class BoardManager : MonoBehaviour
                     continue;
                 }
 
-                RowHolder.rows[row].intItem.Add(int.Parse(csvData[i][j]));
+                // RowHolder.rows[row].intItem.Add(int.Parse(csvData[i][j]));
                 if (int.Parse(csvData[i][j]) != 0)
                 {
                     HandleCreateBall(int.Parse(csvData[i][j]), i, j);
@@ -73,7 +73,7 @@ public class BoardManager : MonoBehaviour
             stringBuilder.Append("|\n");
             row++;
         }
-        RowHolder.rows.RemoveAt(row - 1);
+        // RowHolder.rows.RemoveAt(row - 1);
         Debug.Log(stringBuilder.ToString());
     }
     private void CreateBall(int ballIndex, Vector3 transform, MatrixBall matrixBall)
