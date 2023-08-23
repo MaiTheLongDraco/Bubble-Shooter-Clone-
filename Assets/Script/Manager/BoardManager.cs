@@ -86,4 +86,9 @@ public class BoardManager : MonoBehaviour
         ball.gameObject.tag = "Ball";
         ball.transform.SetParent(ballParent.transform);
     }
+    public bool IsListMatrixContainItem(MatrixBall ball)
+    {
+        var isContain = ListMatrixBall.Contains(ball);
+        return isContain;
+    }
 }
