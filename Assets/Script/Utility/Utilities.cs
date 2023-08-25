@@ -46,8 +46,6 @@ public class CircularList<T> : List<T>
     }
     public void MoveNext()
     {
-        Debug.Log($" enter move nexxt -- valuesCOunt {values.Count}");
-
         if (i > values.Count - 1)
         {
             i = 0;

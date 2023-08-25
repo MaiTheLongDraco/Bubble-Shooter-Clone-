@@ -9540,6 +9540,12 @@ MonoBehaviour:
   - {fileID: 751720758080972838, guid: 8c5aad05a71fcf542b60478a6e466eee, type: 3}
   - {fileID: 6349769940017969025, guid: 20142c3b44aaf784ba7b9d321fda848f, type: 3}
   - {fileID: 3761751206535438668, guid: 0d8746233bece104a9d773fef060a916, type: 3}
+  listMatrixBall:
+  - {fileID: 2471362841747742887, guid: 8d123aed9972157408893966c5320a85, type: 3}
+  - {fileID: 6781825003178363312, guid: f4aabce6b9bff564b9e681ec95fa1ccb, type: 3}
+  - {fileID: 751720758080972838, guid: ac23789d02fb1794eb766506697b171c, type: 3}
+  - {fileID: 6349769940017969025, guid: aa6ca2e89e8366e459dea862ed7aa84d, type: 3}
+  - {fileID: 3761751206535438668, guid: 515f8176b215f0b43af916a4cfb748a7, type: 3}
   listShootingPos:
   - {fileID: 1224573924}
   - {fileID: 595037945}
@@ -9548,7 +9554,9 @@ MonoBehaviour:
   - {fileID: 1738556921}
   targetVelocity: 400
   lineReflection: {fileID: 99134369}
+  boardManager: {fileID: 0}
   ballParent: {fileID: 1290109382}
+  ballAddParent: {fileID: 1286589530}
 --- !u!1001 &1281115202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9627,6 +9635,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6576969628361921658, guid: 0ceabb04a3a2d0847b29a98e83637ad1, type: 3}
   m_PrefabInstance: {fileID: 1281115202}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1286589529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1286589530}
+  m_Layer: 0
+  m_Name: BallAddNewParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1286589530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286589529}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1290109381
 GameObject:
   m_ObjectHideFlags: 0

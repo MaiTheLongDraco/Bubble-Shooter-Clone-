@@ -36,4 +36,28 @@ public class MatrixBall : MonoBehaviour
     {
         return BoardManager.Instance.RowHolder.GetRowItem(index.x + 1, index.y);
     }
+    public Vector2Int GetLeftIndex()
+    {
+        return new Vector2Int(index.x, index.y - 1);
+    }
+    public Vector2Int GetRightIndex()
+    {
+        return new Vector2Int(index.x, index.y + 1);
+    }
+    public Vector2Int GetDownRightIndexEven()
+    {
+        return new Vector2Int(index.x + 1, index.y);
+    }
+    public Vector2Int GetDownRightOddIndex()
+    {
+        return new Vector2Int(index.x + 1, index.y + 1);
+    }
+    public Vector2Int GetDownLeftEvenIndex()
+    {
+        return new Vector2Int(index.x + 1, index.y - 1);
+    }
+    public Vector2Int GetDownLeftOddIndex()
+    {
+        return new Vector2Int(index.x + 1, index.y);
+    }
 }

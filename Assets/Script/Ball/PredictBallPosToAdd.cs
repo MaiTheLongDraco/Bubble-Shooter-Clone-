@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using com.soha.bridge;
 using UnityEngine;
 
@@ -7,10 +5,10 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
 {
     private Vector2 desireBallPos;
     public Vector2 DesireBallPos { get => desireBallPos; set => desireBallPos = value; }
+    public Vector2Int TargetID;
 
     public void HandlePosToAddBall(bool haveLeft, bool haveRight, RaycastHit2D hit2D, MatrixBall matrixBall)
     {
-
         var ballPos = (Vector2)hit2D.transform.position;
         if (haveLeft && haveRight)
         {
@@ -29,11 +27,13 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
         {
             if (isDownLeft)
             {
+                TargetID = matrixBall.GetDownLeftEvenIndex();
                 print("down left even row +++++++");
                 return matrixBall.GetDownLeftEven();
             }
             else
             {
+                TargetID = matrixBall.GetDownRightIndexEven();
                 print("down right even row +++++++");
                 return matrixBall.GetDownRightEven();
             }
@@ -42,11 +42,13 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
         {
             if (isDownLeft)
             {
+                TargetID = matrixBall.GetDownLeftOddIndex();
                 print("down left obb row  +++++++");
                 return matrixBall.GetDownLeftOdd();
             }
             else
             {
+                TargetID = matrixBall.GetDownRightOddIndex();
                 print("down right obb row +++++++");
                 return matrixBall.GetDownRightOdd();
             }

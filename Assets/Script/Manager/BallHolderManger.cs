@@ -4,20 +4,27 @@ public class BallHolderManger : MonoBehaviour
 {
     public static BallHolderManger Instance;
     [SerializeField] private List<GameObject> listBall;
+    [SerializeField] private List<GameObject> listMatrixBall;
     [SerializeField] private List<Transform> listShootingPos;
     [SerializeField] private CircularList<BallShooting> ballShootings;
     [SerializeField] private float targetVelocity;
     [SerializeField] private LineReflection lineReflection;
+    [SerializeField] private BoardManager boardManager;
+
     [SerializeField] private Transform ballParent;
+    [SerializeField] private Transform ballAddParent;
+
     private Vector2 mainPos;
-    private PredictBallPosToAdd predictBallPosToAdd;
+    private PredictBallPosToAdd predictBall;
+
 
     public Transform BallParent { get => ballParent; set => ballParent = value; }
 
     private void Start()
     {
+        boardManager = FindObjectOfType<BoardManager>();
         mainPos = listShootingPos[0].position;
-        predictBallPosToAdd = PredictBallPosToAdd.Instance;
+        predictBall = PredictBallPosToAdd.Instance;
         lineReflection = FindObjectOfType<LineReflection>();
         ballShootings = new CircularList<BallShooting>();
         CreateFirstTurnBall();
@@ -50,9 +57,20 @@ public class BallHolderManger : MonoBehaviour
         ballShootings.GetCurrent().SetBallVelocity(targetVelocity);
         ballShootings.GetCurrent().ShowShootDirection(lineReflection.PassDir);
         print($" ballShootings.GetCurrent() {ballShootings.GetCurrent().name}");
+        ballShootings.GetCurrent().AddListenerFotHitEvent(() => CreateNewMatrixBall());
         ballShootings.GetCurrent().AddListenerFotHitEvent(() => LoadNextBall());
     }
-
+    private void CreateNewMatrixBall()
+    {
+        DestroyCurrentShootBall();
+        var rand = Random.Range(0, listMatrixBall.Count - 1);
+        var matrixBall = Instantiate(listMatrixBall[rand], predictBall.DesireBallPos, Quaternion.identity);
+        matrixBall.AddComponent<CircleCollider2D>();
+        matrixBall.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        matrixBall.GetComponent<MatrixBall>().index = predictBall.TargetID;
+        boardManager.ListMatrixBall.Add(matrixBall.GetComponent<MatrixBall>());
+        matrixBall.transform.SetParent(ballAddParent);
+    }
     private void LoadNextBall()
     {
         print("ball come to tarrget poss");
@@ -60,6 +78,10 @@ public class BallHolderManger : MonoBehaviour
         ballShootings.MoveNext();
         ballShootings.GetCurrent().transform.position = mainPos;
         AddNewShootingBall();
+    }
+    private void DestroyCurrentShootBall()
+    {
+        Destroy(ballShootings.GetCurrent().gameObject);
     }
     public void SwapBall()
     {
