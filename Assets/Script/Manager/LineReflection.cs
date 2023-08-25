@@ -8,6 +8,7 @@ public class LineReflection : MonoBehaviour
     [SerializeField] private LineHandle lineHandle;
     [SerializeField] private Vector2Int passIndex;
     public static LineReflection Instance;
+    private Vector2 passDir;
 
     public Vector2Int PassIndex { get => passIndex; set => passIndex = value; }
 
@@ -27,6 +28,7 @@ public class LineReflection : MonoBehaviour
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
         var direction = mousePos - mainPos.position;
+        PassDir = direction;
         lineHandle.ResetLine();
         HitHandlle(mainPos.position, direction, LayerMask.GetMask(startLayerMask));
     }
@@ -48,7 +50,7 @@ public class LineReflection : MonoBehaviour
 
     private BoardManager BoardManager => BoardManager.Instance;
     private PredictBallPosToAdd PredicPos => PredictBallPosToAdd.Instance;
-
+    public Vector2 PassDir { get => passDir; set => passDir = value; }
 
     private bool IsMeetCondition(string tag, MatrixBall matrixBall, RaycastHit2D hit2D)
     {

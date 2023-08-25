@@ -6,6 +6,8 @@ using UnityEngine;
 public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
 {
     private Vector2 desireBallPos;
+    public Vector2 DesireBallPos { get => desireBallPos; set => desireBallPos = value; }
+
     public void HandlePosToAddBall(bool haveLeft, bool haveRight, RaycastHit2D hit2D, MatrixBall matrixBall)
     {
 

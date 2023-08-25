@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Utilities : MonoBehaviour
@@ -33,13 +34,31 @@ public class Utilities : MonoBehaviour
         SetTypeForBall(ballShoot, ballObj, type);
         // Log($"ballShoot tranform {ballShoot.transform.position}");
     }
-    public static bool IsMousePosUnderMainBall()
+}
+public class CircularList<T> : List<T>
+{
+    public List<T> values = new List<T>();
+    private int i = 0;
+    public T currentItem;
+    public new void Add(T item)
     {
-        if (GetInput.GetMouseInput().y < BallHolderManger.Instance.MainTranform.position.y)
+        values.Add(item);
+    }
+    public void MoveNext()
+    {
+        Debug.Log($" enter move nexxt -- valuesCOunt {values.Count}");
+
+        if (i > values.Count - 1)
         {
-            LineHandle.Instance.ResetLine();
-            return false;
+            i = 0;
         }
-        else return true;
+        i++;
+        Debug.Log($" enter move nexxt -- valuesCOunt {values.Count}");
+        currentItem = values[i];
+    }
+    public T GetCurrent()
+    {
+        currentItem = values[i];
+        return currentItem;
     }
 }

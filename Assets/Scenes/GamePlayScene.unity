@@ -1475,6 +1475,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6576969628361921658, guid: 0ceabb04a3a2d0847b29a98e83637ad1, type: 3}
   m_PrefabInstance: {fileID: 2013504008}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &216053945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 216053946}
+  m_Layer: 0
+  m_Name: FourthBall
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &216053946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216053945}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.361, y: -3.635, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1239046973}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &220229677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4459,7 +4490,7 @@ GameObject:
   m_Component:
   - component: {fileID: 595037945}
   m_Layer: 0
-  m_Name: 'MinorBallHolding '
+  m_Name: SecondBall
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -4473,7 +4504,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595037944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.704, y: -3.003, z: 0}
+  m_LocalPosition: {x: 0.641, y: -2.94, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5914,6 +5945,37 @@ Transform:
   - {fileID: 621516655}
   m_Father: {fileID: 1987224062}
   m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &785929804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 785929805}
+  m_Layer: 0
+  m_Name: ThirdBall
+  m_TagString: Untagged
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &785929805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785929804}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.403, y: -3.621, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1239046973}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &794413125
 PrefabInstance:
@@ -9328,7 +9390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1224573924}
   m_Layer: 0
-  m_Name: MainBallHolding
+  m_Name: FirstBall
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -9454,6 +9516,9 @@ Transform:
   m_Children:
   - {fileID: 1224573924}
   - {fileID: 595037945}
+  - {fileID: 785929805}
+  - {fileID: 216053946}
+  - {fileID: 1738556921}
   m_Father: {fileID: 2016937408}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9475,15 +9540,15 @@ MonoBehaviour:
   - {fileID: 751720758080972838, guid: 8c5aad05a71fcf542b60478a6e466eee, type: 3}
   - {fileID: 6349769940017969025, guid: 20142c3b44aaf784ba7b9d321fda848f, type: 3}
   - {fileID: 3761751206535438668, guid: 0d8746233bece104a9d773fef060a916, type: 3}
-  listBallHolder:
-  - BallShooting: {fileID: 0}
-    BallTranform: {fileID: 1224573924}
-  - BallShooting: {fileID: 0}
-    BallTranform: {fileID: 595037945}
-  mainTranform: {fileID: 1224573924}
-  minorTranform: {fileID: 595037945}
-  distance: 0
-  ballSpeed: 1000
+  listShootingPos:
+  - {fileID: 1224573924}
+  - {fileID: 595037945}
+  - {fileID: 785929805}
+  - {fileID: 216053946}
+  - {fileID: 1738556921}
+  targetVelocity: 400
+  lineReflection: {fileID: 99134369}
+  ballParent: {fileID: 1290109382}
 --- !u!1001 &1281115202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12981,6 +13046,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6576969628361921658, guid: 0ceabb04a3a2d0847b29a98e83637ad1, type: 3}
   m_PrefabInstance: {fileID: 1729145491}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1738556920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1738556921}
+  m_Layer: 0
+  m_Name: FifthBall
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1738556921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738556920}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.616, y: -2.938, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1239046973}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1747941494
 PrefabInstance:
   m_ObjectHideFlags: 0

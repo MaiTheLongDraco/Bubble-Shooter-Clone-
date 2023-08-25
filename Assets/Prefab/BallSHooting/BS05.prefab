@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5073451981422737266}
   - component: {fileID: 6809517817013708366}
   - component: {fileID: -2457908303878906393}
+  - component: {fileID: 3373082895807498112}
   m_Layer: 11
   m_Name: BS05
   m_TagString: Untagged
@@ -120,3 +121,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: {x: 0, y: 0}
+--- !u!114 &3373082895807498112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3761751206535438668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edf4a21a5396c4148870392ba2f5e154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballHolderType: 0
+  _velocity: 0
+  lineHandle: {fileID: 0}
