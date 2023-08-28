@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: {x: 0, y: 0}
+  matrixBallType: 4
 --- !u!114 &3373082895807498112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,3 +137,6 @@ MonoBehaviour:
   ballHolderType: 0
   _velocity: 0
   lineHandle: {fileID: 0}
+  onHitMatrix:
+    m_PersistentCalls:
+      m_Calls: []

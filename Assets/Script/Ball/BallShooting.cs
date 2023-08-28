@@ -74,4 +74,8 @@ public class BallShooting : MonoBehaviour
     {
         onHitMatrix.AddListener(call);
     }
+    public MatrixBall GetMatrixBall()
+    {
+        return this.GetComponent<MatrixBall>();
+    }
 }

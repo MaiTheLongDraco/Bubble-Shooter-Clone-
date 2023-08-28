@@ -6,12 +6,8 @@ public class LineReflection : MonoBehaviour
     [SerializeField] private Vector2 distance;
     private string[] startLayerMask = { "UpLimit", "RightLimit", "LeftLimit", "DownLimit" };
     [SerializeField] private LineHandle lineHandle;
-    [SerializeField] private Vector2Int passIndex;
     public static LineReflection Instance;
     private Vector2 passDir;
-
-    public Vector2Int PassIndex { get => passIndex; set => passIndex = value; }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -57,7 +53,6 @@ public class LineReflection : MonoBehaviour
         if (tag == "Ball")
         {
             print($" index {matrixBall.index}");
-            PassIndex = matrixBall.index;
             var haveLeft = BoardManager.IsListMatrixContainItem(matrixBall.GetAroundItem(0, -1));
             var haveRight = BoardManager.IsListMatrixContainItem(matrixBall.GetAroundItem(0, 1));
             print($"haveLeft __ {haveLeft}");
@@ -69,8 +64,6 @@ public class LineReflection : MonoBehaviour
 
         else return true;
     }
-
-
     private void DrawLine(Vector2 origin, Vector2 next)
     {
         // Debug.DrawLine(orrigin, next);

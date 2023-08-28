@@ -3,6 +3,7 @@ using System.Linq;
 public class MatrixBall : MonoBehaviour
 {
     public Vector2Int index;
+    public MatrixBallType matrixBallType;
     public MatrixBall(Vector2Int index)
     {
         this.index = index;
@@ -60,4 +61,12 @@ public class MatrixBall : MonoBehaviour
     {
         return new Vector2Int(index.x + 1, index.y);
     }
+}
+public enum MatrixBallType
+{
+    BALL_01,
+    BALL_02,
+    BALL_03,
+    BALL_04,
+    BALL_05
 }

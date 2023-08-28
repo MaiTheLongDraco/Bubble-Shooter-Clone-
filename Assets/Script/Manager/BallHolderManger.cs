@@ -64,12 +64,45 @@ public class BallHolderManger : MonoBehaviour
     {
         DestroyCurrentShootBall();
         var rand = Random.Range(0, listMatrixBall.Count - 1);
-        var matrixBall = Instantiate(listMatrixBall[rand], predictBall.DesireBallPos, Quaternion.identity);
+        var matrixBall = HandleCreateType(ballShootings.GetCurrent().GetMatrixBall());
         matrixBall.AddComponent<CircleCollider2D>();
         matrixBall.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         matrixBall.GetComponent<MatrixBall>().index = predictBall.TargetID;
         boardManager.ListMatrixBall.Add(matrixBall.GetComponent<MatrixBall>());
         matrixBall.transform.SetParent(ballAddParent);
+    }
+    private GameObject HandleCreateType(MatrixBall matrixBall)
+    {
+        GameObject newBall = new GameObject();
+        switch (matrixBall.matrixBallType)
+        {
+            case MatrixBallType.BALL_01:
+                {
+                    newBall = Instantiate(listMatrixBall[0], predictBall.DesireBallPos, Quaternion.identity);
+                }
+                break;
+            case MatrixBallType.BALL_02:
+                {
+                    newBall = Instantiate(listMatrixBall[1], predictBall.DesireBallPos, Quaternion.identity);
+                }
+                break;
+            case MatrixBallType.BALL_03:
+                {
+                    newBall = Instantiate(listMatrixBall[2], predictBall.DesireBallPos, Quaternion.identity);
+                }
+                break;
+            case MatrixBallType.BALL_04:
+                {
+                    newBall = Instantiate(listMatrixBall[3], predictBall.DesireBallPos, Quaternion.identity);
+                }
+                break;
+            case MatrixBallType.BALL_05:
+                {
+                    newBall = Instantiate(listMatrixBall[4], predictBall.DesireBallPos, Quaternion.identity);
+                }
+                break;
+        }
+        return newBall;
     }
     private void LoadNextBall()
     {

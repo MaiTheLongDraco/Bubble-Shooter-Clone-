@@ -119,3 +119,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06261e8330af7c041ae77e0061921582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: {x: 0, y: 0}
+  matrixBallType: 2
