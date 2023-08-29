@@ -10,7 +10,7 @@ public class BallHolderManger : MonoBehaviour
     [SerializeField] private float targetVelocity;
     [SerializeField] private LineReflection lineReflection;
     [SerializeField] private BoardManager boardManager;
-
+    [SerializeField] private bool canShoot;
     [SerializeField] private Transform ballParent;
     [SerializeField] private Transform ballAddParent;
 
@@ -31,7 +31,18 @@ public class BallHolderManger : MonoBehaviour
     }
     private void Update()
     {
-        ShootBall();
+        HandleShoot();
+    }
+    private void HandleShoot()
+    {
+        if (canShoot)
+        {
+            ShootBall();
+        }
+    }
+    public void SetCanShoot(bool set)
+    {
+        canShoot = set;
     }
     private void CreateFirstTurnBall()
     {

@@ -6,6 +6,8 @@ public class LineReflection : MonoBehaviour
     [SerializeField] private Vector2 distance;
     private string[] startLayerMask = { "UpLimit", "RightLimit", "LeftLimit", "DownLimit" };
     [SerializeField] private LineHandle lineHandle;
+    [SerializeField] private bool isLineOn;
+
     public static LineReflection Instance;
     private Vector2 passDir;
     // Start is called before the first frame update
@@ -15,8 +17,24 @@ public class LineReflection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FollowMouseDir();
+        SwitchOnOffLine();
         End();
+    }
+    private void SwitchOnOffLine()
+    {
+        if (isLineOn)
+        {
+            FollowMouseDir();
+        }
+        else
+        {
+            lineHandle.ResetLine();
+        }
+    }
+
+    public void SetActiveLine(bool set)
+    {
+        isLineOn = set;
     }
     private void FollowMouseDir()
     {
