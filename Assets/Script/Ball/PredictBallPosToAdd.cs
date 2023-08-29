@@ -17,14 +17,17 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
         else if (haveLeft && !haveRight)
         {
             print("have left but not have right------");
+            HandleRemainCase(hit2D, matrixBall, ballPos);
         }
         else if (!haveLeft && haveRight)
         {
             print("have right but not have left------");
+            HandleRemainCase(hit2D, matrixBall, ballPos);
         }
         else
         {
             print("not have left and right------");
+            HandleRemainCase(hit2D, matrixBall, ballPos);
         }
     }
     private void HandleHaveLeftAndRight(RaycastHit2D hit2D, MatrixBall matrixBall, Vector2 ballPos)
@@ -32,6 +35,42 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
         bool isDownLeft = hit2D.point.x < ballPos.x ? true : false;
         AssignDesirePos(CalCulateTargetPos(matrixBall, isDownLeft));
         print($" desireBallPos +++++++ {desireBallPos}");
+    }
+    private void HandleRemainCase(RaycastHit2D hit2D, MatrixBall matrixBall, Vector2 ballPos)
+    {
+        var upLimit = ballPos.y + matrixBall.GetSpriteSize().y / 11;
+        var downLimit = ballPos.y - matrixBall.GetSpriteSize().y / 11;
+        var isSide = hit2D.point.y < upLimit && hit2D.point.y > downLimit;
+        print($"upLimit ++{upLimit}");
+        print($"downLimit ++{downLimit}");
+        print($"isSide ++{isSide}");
+        if (isSide)
+        {
+            bool isLeft = isSide && hit2D.point.x < ballPos.x ? true : false;
+            print($"isLeft ++{isLeft}");
+            AssignDesirePos(CalculateSidePos(matrixBall, isLeft));
+        }
+        else
+        {
+            HandleHaveLeftAndRight(hit2D, matrixBall, ballPos);
+        }
+    }
+    private Vector2 CalculateSidePos(MatrixBall matrixBall, bool isLeft)
+    {
+        if (isLeft)
+        {
+            TargetID = matrixBall.GetLeftIndex();
+            print($" TargetID {TargetID}");
+            print("left  +++++++");
+            return matrixBall.GetLeft();
+        }
+        else
+        {
+            TargetID = matrixBall.GetRightIndex();
+            print($" TargetID {TargetID}");
+            print("right+++++++");
+            return matrixBall.GetRight();
+        }
     }
     private Vector2 CalCulateTargetPos(MatrixBall matrixBall, bool isDownLeft)
     {

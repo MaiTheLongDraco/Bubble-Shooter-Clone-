@@ -61,6 +61,10 @@ public class MatrixBall : MonoBehaviour
     {
         return new Vector2Int(index.x + 1, index.y);
     }
+    public Vector2 GetSpriteSize()
+    {
+        return this.GetComponent<SpriteRenderer>().size;
+    }
 }
 public enum MatrixBallType
 {
