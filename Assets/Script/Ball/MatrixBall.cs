@@ -31,6 +31,7 @@ public class MatrixBall : MonoBehaviour
     }
     public Vector2 GetDownLeftEven()
     {
+        // if
         return BoardManager.Instance.RowHolder.GetRowItem(index.x + 1, index.y - 1);
     }
     public Vector2 GetDownLeftOdd()

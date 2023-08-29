@@ -38,8 +38,8 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
     }
     private void HandleRemainCase(RaycastHit2D hit2D, MatrixBall matrixBall, Vector2 ballPos)
     {
-        var upLimit = ballPos.y + matrixBall.GetSpriteSize().y / 11;
-        var downLimit = ballPos.y - matrixBall.GetSpriteSize().y / 11;
+        var upLimit = ballPos.y + matrixBall.GetSpriteSize().y / 18;
+        var downLimit = ballPos.y - matrixBall.GetSpriteSize().y / 18;
         var isSide = hit2D.point.y < upLimit && hit2D.point.y > downLimit;
         print($"upLimit ++{upLimit}");
         print($"downLimit ++{downLimit}");
