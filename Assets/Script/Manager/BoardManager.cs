@@ -23,6 +23,10 @@ public class BoardManager : MonoBehaviour
     {
         ReadDataFromFile(data);
     }
+    public MatrixBall GetMatrixBall(Vector2Int target)
+    {
+        return listMatrix.Find(b => b.index == target);
+    }
 
     public void HandleCreateBall(int number, int i, int j)
     {

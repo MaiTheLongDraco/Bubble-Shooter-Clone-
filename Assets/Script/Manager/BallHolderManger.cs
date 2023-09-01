@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public class BallHolderManger : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class BallHolderManger : MonoBehaviour
     [SerializeField] private bool canShoot;
     [SerializeField] private Transform ballParent;
     [SerializeField] private Transform ballAddParent;
+    [SerializeField] private MatrixBall toCompareBall;
 
     private Vector2 mainPos;
     private PredictBallPosToAdd predictBall;
@@ -71,15 +73,28 @@ public class BallHolderManger : MonoBehaviour
         ballShootings.GetCurrent().AddListenerFotHitEvent(() => CreateNewMatrixBall());
         ballShootings.GetCurrent().AddListenerFotHitEvent(() => LoadNextBall());
     }
+    public void SetToCompare(MatrixBall toAdd)
+    {
+        toCompareBall = toAdd;
+    }
+    private void HandleAddBallToSameType(MatrixBall toAdd)
+    {
+        var ballType = CheckSameType.Instance.SameTypeBalls[0].matrixBallType;
+        if (toAdd.matrixBallType == ballType)
+        {
+            CheckSameType.Instance.AddNewBall(toAdd);
+        }
+    }
+
     private void CreateNewMatrixBall()
     {
         DestroyCurrentShootBall();
-        var rand = Random.Range(0, listMatrixBall.Count - 1);
         var matrixBall = HandleCreateType(ballShootings.GetCurrent().GetMatrixBall());
         matrixBall.AddComponent<CircleCollider2D>();
         matrixBall.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         matrixBall.GetComponent<MatrixBall>().index = predictBall.TargetID;
         boardManager.ListMatrixBall.Add(matrixBall.GetComponent<MatrixBall>());
+        HandleAddBallToSameType(matrixBall.GetComponent<MatrixBall>());
         matrixBall.transform.SetParent(ballAddParent);
     }
     private GameObject HandleCreateType(MatrixBall matrixBall)

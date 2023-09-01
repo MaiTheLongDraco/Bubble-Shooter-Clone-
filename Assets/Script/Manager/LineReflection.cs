@@ -1,4 +1,6 @@
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LineReflection : MonoBehaviour
 {
@@ -7,7 +9,6 @@ public class LineReflection : MonoBehaviour
     private string[] startLayerMask = { "UpLimit", "RightLimit", "LeftLimit", "DownLimit" };
     [SerializeField] private LineHandle lineHandle;
     [SerializeField] private bool isLineOn;
-
     public static LineReflection Instance;
     private Vector2 passDir;
     // Start is called before the first frame update
@@ -73,6 +74,8 @@ public class LineReflection : MonoBehaviour
             print($" index {matrixBall.index}");
             var haveLeft = BoardManager.IsListMatrixContainItem(matrixBall.GetAroundItem(0, -1));
             var haveRight = BoardManager.IsListMatrixContainItem(matrixBall.GetAroundItem(0, 1));
+            CheckSameType.Instance.CheckSameTypeAround(matrixBall);
+
             print($"haveLeft __ {haveLeft}");
             print($"haveRight __ {haveRight}");
             print($"ball {matrixBall.index} __ hit2d.point {hit2D.point}__ ball tranform {hit2D.transform.position}");

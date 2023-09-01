@@ -13,31 +13,47 @@ public class MatrixBall : MonoBehaviour
         var desireIndex = new Vector2Int(index.x + changeX, index.y + changeY);
         return BoardManager.Instance.ListMatrixBall.Find(ball => ball.index == desireIndex);
     }
+    #region GetSide
     public Vector2 GetLeft()
     {
         return BoardManager.Instance.RowHolder.GetRowItem(index.x, index.y - 1);
+    }
+    public MatrixBall GetLeftBall()
+    {
+        return BoardManager.Instance.GetMatrixBall(GetLeftIndex());
     }
     public Vector2 GetRight()
     {
         return BoardManager.Instance.RowHolder.GetRowItem(index.x, index.y + 1);
     }
+    public MatrixBall GetRightBall()
+    {
+        return BoardManager.Instance.GetMatrixBall(GetRightIndex());
+    }
+    #endregion
+    #region GetDownEven
     public Vector2 GetDownRightEven()
     {
         return BoardManager.Instance.RowHolder.GetRowItem(index.x + 1, index.y);
-    }
-    public Vector2 GetDownRightOdd()
-    {
-        return BoardManager.Instance.RowHolder.GetRowItem(index.x + 1, index.y + 1);
     }
     public Vector2 GetDownLeftEven()
     {
         // if
         return BoardManager.Instance.RowHolder.GetRowItem(index.x + 1, index.y - 1);
     }
+    #endregion
+    #region GetDownOdd
+    public Vector2 GetDownRightOdd()
+    {
+        return BoardManager.Instance.RowHolder.GetRowItem(index.x + 1, index.y + 1);
+    }
+
     public Vector2 GetDownLeftOdd()
     {
         return BoardManager.Instance.RowHolder.GetRowItem(index.x + 1, index.y);
     }
+    #endregion
+    #region GetAroundIndex
     public Vector2Int GetLeftIndex()
     {
         return new Vector2Int(index.x, index.y - 1);
@@ -62,6 +78,46 @@ public class MatrixBall : MonoBehaviour
     {
         return new Vector2Int(index.x + 1, index.y);
     }
+    #region GetUpIndex
+    public Vector2Int GetUpLeftEvenIndex()
+    {
+        return new Vector2Int(index.x - 1, index.y - 1);
+    }
+    public Vector2Int GetUpRighttEvenIndex()
+    {
+        return new Vector2Int(index.x - 1, index.y);
+    }
+    public Vector2Int GetUpLeftOddIndex()
+    {
+        return new Vector2Int(index.x - 1, index.y);
+    }
+    public Vector2Int GetUpRightOddIndex()
+    {
+        return new Vector2Int(index.x - 1, index.y + 1);
+    }
+    #endregion
+    #endregion
+    #region GetUpEven
+    public MatrixBall GetUpLeftEven()
+    {
+        return BoardManager.Instance.GetMatrixBall(GetUpLeftEvenIndex());
+    }
+    public MatrixBall GetUpRightEven()
+    {
+        return BoardManager.Instance.GetMatrixBall(GetUpRighttEvenIndex());
+    }
+    #endregion
+    #region GetUpOdd
+    public MatrixBall GetUpLeftOdd()
+    {
+        return BoardManager.Instance.GetMatrixBall(GetUpLeftOddIndex());
+    }
+    public MatrixBall GetUpRightOdd()
+    {
+        return BoardManager.Instance.GetMatrixBall(GetUpRightOddIndex());
+    }
+    #endregion
+
     public Vector2 GetSpriteSize()
     {
         return this.GetComponent<SpriteRenderer>().size;

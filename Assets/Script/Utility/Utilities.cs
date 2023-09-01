@@ -59,4 +59,5 @@ public class CircularList<T> : List<T>
         currentItem = values[i];
         return currentItem;
     }
+
 }
