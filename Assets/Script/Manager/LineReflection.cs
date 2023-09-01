@@ -75,7 +75,6 @@ public class LineReflection : MonoBehaviour
             var haveLeft = BoardManager.IsListMatrixContainItem(matrixBall.GetAroundItem(0, -1));
             var haveRight = BoardManager.IsListMatrixContainItem(matrixBall.GetAroundItem(0, 1));
             CheckSameType.Instance.CheckSameTypeAround(matrixBall);
-
             print($"haveLeft __ {haveLeft}");
             print($"haveRight __ {haveRight}");
             print($"ball {matrixBall.index} __ hit2d.point {hit2D.point}__ ball tranform {hit2D.transform.position}");
@@ -96,6 +95,7 @@ public class LineReflection : MonoBehaviour
         {
             lineHandle.AddPointToList();
             lineHandle.ResetLine();
+            CheckSameType.Instance.ClearListSameType();
         }
     }
 }

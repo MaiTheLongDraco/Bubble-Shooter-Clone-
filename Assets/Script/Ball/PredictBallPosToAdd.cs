@@ -29,8 +29,6 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
             print("not have left and right------");
             HandleRemainCase(hit2D, matrixBall, ballPos);
         }
-        CheckSameType.Instance.AddNewBall(matrixBall);
-        CheckSameType.Instance.ClearListSameType(matrixBall);
     }
     private void HandleHaveLeftAndRight(RaycastHit2D hit2D, MatrixBall matrixBall, Vector2 ballPos)
     {

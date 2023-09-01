@@ -6,9 +6,7 @@ using System.Linq;
 public class CheckSameType : MonoBehaviourSingleton<CheckSameType>
 {
     [SerializeField] private List<MatrixBall> sameTypeBalls = new List<MatrixBall>();
-
     public List<MatrixBall> SameTypeBalls { get => sameTypeBalls; set => sameTypeBalls = value; }
-
     public void CheckSameTypeAround(MatrixBall curentBall)
     {
         if (curentBall.index.x % 2 == 0)
@@ -54,12 +52,17 @@ public class CheckSameType : MonoBehaviourSingleton<CheckSameType>
             return;
         sameTypeBalls.Add(newBall);
     }
+
     public void ClearListSameType(MatrixBall toCompareBall)
     {
         if (sameTypeBalls.Any(b => b.matrixBallType != toCompareBall.matrixBallType))
         {
             sameTypeBalls.Clear();
         }
+    }
+    public void ClearListSameType()
+    {
+        sameTypeBalls.Clear();
     }
 
 

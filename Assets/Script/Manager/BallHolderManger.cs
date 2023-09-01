@@ -14,7 +14,7 @@ public class BallHolderManger : MonoBehaviour
     [SerializeField] private bool canShoot;
     [SerializeField] private Transform ballParent;
     [SerializeField] private Transform ballAddParent;
-    [SerializeField] private MatrixBall toCompareBall;
+    private CheckSameType checkSameType => CheckSameType.Instance;
 
     private Vector2 mainPos;
     private PredictBallPosToAdd predictBall;
@@ -73,10 +73,6 @@ public class BallHolderManger : MonoBehaviour
         ballShootings.GetCurrent().AddListenerFotHitEvent(() => CreateNewMatrixBall());
         ballShootings.GetCurrent().AddListenerFotHitEvent(() => LoadNextBall());
     }
-    public void SetToCompare(MatrixBall toAdd)
-    {
-        toCompareBall = toAdd;
-    }
     private void HandleAddBallToSameType(MatrixBall toAdd)
     {
         var ballType = CheckSameType.Instance.SameTypeBalls[0].matrixBallType;
@@ -84,8 +80,17 @@ public class BallHolderManger : MonoBehaviour
         {
             CheckSameType.Instance.AddNewBall(toAdd);
         }
+        MakeBallExplode(CheckSameType.Instance.SameTypeBalls);
     }
-
+    private void MakeBallExplode(List<MatrixBall> listExplode)
+    {
+        var sameTypeCount = listExplode.Count;
+        if (sameTypeCount >= 3)
+        {
+            listExplode.ForEach(b => Destroy(b.gameObject, 0.5f));
+            listExplode.Clear();
+        }
+    }
     private void CreateNewMatrixBall()
     {
         DestroyCurrentShootBall();
@@ -94,6 +99,7 @@ public class BallHolderManger : MonoBehaviour
         matrixBall.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         matrixBall.GetComponent<MatrixBall>().index = predictBall.TargetID;
         boardManager.ListMatrixBall.Add(matrixBall.GetComponent<MatrixBall>());
+        checkSameType.CheckSameTypeAround(matrixBall.GetComponent<MatrixBall>());
         HandleAddBallToSameType(matrixBall.GetComponent<MatrixBall>());
         matrixBall.transform.SetParent(ballAddParent);
     }
