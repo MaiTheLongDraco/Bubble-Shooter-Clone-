@@ -8,6 +8,10 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
     public Vector2Int TargetID;
     public void HandlePosToAddBall(bool haveLeft, bool haveRight, RaycastHit2D hit2D, MatrixBall matrixBall)
     {
+        var test = matrixBall.GetAllBelowBall();
+        test.ForEach(b => print($"down ball {b.index}"));
+        var test1 = matrixBall.GetAllBesideBall();
+        test1.ForEach(b => print($"side ball {b.index}"));
         var ballPos = (Vector2)hit2D.transform.position;
         if (haveLeft && haveRight)
         {

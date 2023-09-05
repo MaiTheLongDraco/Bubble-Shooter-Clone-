@@ -7,6 +7,7 @@ public class CheckSameType : MonoBehaviourSingleton<CheckSameType>
 {
     [SerializeField] private List<MatrixBall> sameTypeBalls = new List<MatrixBall>();
     public List<MatrixBall> SameTypeBalls { get => sameTypeBalls; set => sameTypeBalls = value; }
+    private BoardManager boardManager => BoardManager.Instance;
     public void CheckSameTypeAround(MatrixBall curentBall)
     {
         if (curentBall.index.x % 2 == 0)

@@ -59,7 +59,7 @@ public class BallHolderManger : MonoBehaviour
     {
         if (ballShootings.Count <= 1)
         {
-            var rand = Random.Range(0, listBall.Count - 1);
+            var rand = Random.Range(0, listBall.Count);
             var ball = Instantiate(listBall[rand], listShootingPos[1].position, Quaternion.identity);
             ballShootings.Add(ball.GetComponent<BallShooting>());
         }
@@ -75,8 +75,6 @@ public class BallHolderManger : MonoBehaviour
     }
     private void HandleAddBallToSameType(MatrixBall toAdd)
     {
-        var ballType = CheckSameType.Instance.SameTypeBalls[0].matrixBallType;
-        if (toAdd.matrixBallType == ballType)
         {
             CheckSameType.Instance.AddNewBall(toAdd);
         }
@@ -88,6 +86,7 @@ public class BallHolderManger : MonoBehaviour
         if (sameTypeCount >= 3)
         {
             listExplode.ForEach(b => Destroy(b.gameObject, 0.5f));
+            boardManager.ListMatrixBall.RemoveAll(item => listExplode.Contains(item));
             listExplode.Clear();
         }
     }

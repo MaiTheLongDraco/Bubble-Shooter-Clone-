@@ -9,11 +9,14 @@ public class LineReflection : MonoBehaviour
     private string[] startLayerMask = { "UpLimit", "RightLimit", "LeftLimit", "DownLimit" };
     [SerializeField] private LineHandle lineHandle;
     [SerializeField] private bool isLineOn;
+    [SerializeField] private GameObject border;
+
     public static LineReflection Instance;
     private Vector2 passDir;
     // Start is called before the first frame update
     void Start()
     {
+        SetActiveBorder(false);
     }
     // Update is called once per frame
     void Update()
@@ -74,11 +77,12 @@ public class LineReflection : MonoBehaviour
             print($" index {matrixBall.index}");
             var haveLeft = BoardManager.IsListMatrixContainItem(matrixBall.GetAroundItem(0, -1));
             var haveRight = BoardManager.IsListMatrixContainItem(matrixBall.GetAroundItem(0, 1));
-            CheckSameType.Instance.CheckSameTypeAround(matrixBall);
             print($"haveLeft __ {haveLeft}");
             print($"haveRight __ {haveRight}");
             print($"ball {matrixBall.index} __ hit2d.point {hit2D.point}__ ball tranform {hit2D.transform.position}");
             PredicPos.HandlePosToAddBall(haveLeft, haveRight, hit2D, matrixBall);
+            border.transform.position = PredicPos.DesireBallPos;
+            SetActiveBorder(true);
             return false;
         }
 
@@ -96,6 +100,11 @@ public class LineReflection : MonoBehaviour
             lineHandle.AddPointToList();
             lineHandle.ResetLine();
             CheckSameType.Instance.ClearListSameType();
+            SetActiveBorder(false);
         }
+    }
+    private void SetActiveBorder(bool set)
+    {
+        border.SetActive(set);
     }
 }

@@ -95,4 +95,12 @@ public class BoardManager : MonoBehaviour
         var isContain = ListMatrixBall.Contains(ball);
         return isContain;
     }
+    public List<MatrixBall> GetBelowTargetBall(Vector2Int index)
+    {
+        return listMatrix.FindAll(ball => ball.index.x > index.x);
+    }
+    public List<MatrixBall> GetBesideTargetBall(Vector2Int index)
+    {
+        return listMatrix.FindAll(ball => ball.index.x == index.x);
+    }
 }

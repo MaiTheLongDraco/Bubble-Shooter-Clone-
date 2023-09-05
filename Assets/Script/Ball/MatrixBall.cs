@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 public class MatrixBall : MonoBehaviour
 {
     public Vector2Int index;
     public MatrixBallType matrixBallType;
+    private BoardManager boardManager => BoardManager.Instance;
     public MatrixBall(Vector2Int index)
     {
         this.index = index;
@@ -121,6 +123,14 @@ public class MatrixBall : MonoBehaviour
     public Vector2 GetSpriteSize()
     {
         return this.GetComponent<SpriteRenderer>().size;
+    }
+    public List<MatrixBall> GetAllBelowBall()
+    {
+        return boardManager.GetBelowTargetBall(index);
+    }
+    public List<MatrixBall> GetAllBesideBall()
+    {
+        return boardManager.GetBesideTargetBall(index);
     }
 }
 public enum MatrixBallType
