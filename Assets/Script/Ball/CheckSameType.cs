@@ -16,10 +16,14 @@ public class CheckSameType : MonoBehaviourSingleton<CheckSameType>
             var UpRightEven = curentBall.GetUpRightEven();
             var LeftEven = curentBall.GetLeftBall();
             var RightEven = curentBall.GetRightBall();
+            var downLeft = curentBall.GetDownLeftEvenBall();
+            var downRight = curentBall.GetDownRightEvenBall();
             ReCursionCheck(UpLeftEven, curentBall);
             ReCursionCheck(UpRightEven, curentBall);
             ReCursionCheck(LeftEven, curentBall);
             ReCursionCheck(RightEven, curentBall);
+            ReCursionCheck(downLeft, curentBall);
+            ReCursionCheck(downRight, curentBall);
             print($"Even coll =====");
         }
         else
@@ -28,10 +32,14 @@ public class CheckSameType : MonoBehaviourSingleton<CheckSameType>
             var UpRightOdd = curentBall.GetUpRightOdd();
             var LeftEven = curentBall.GetLeftBall();
             var RightEven = curentBall.GetRightBall();
+            var downLeft = curentBall.GetDownLeftOddBall();
+            var downRight = curentBall.GetDownRightOddBall();
             ReCursionCheck(UpLeftOdd, curentBall);
             ReCursionCheck(UpRightOdd, curentBall);
             ReCursionCheck(LeftEven, curentBall);
             ReCursionCheck(RightEven, curentBall);
+            ReCursionCheck(downLeft, curentBall);
+            ReCursionCheck(downRight, curentBall);
             print($"odd coll =====");
         }
     }

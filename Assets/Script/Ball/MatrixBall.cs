@@ -44,16 +44,31 @@ public class MatrixBall : MonoBehaviour
         // if
         return BoardManager.Instance.RowHolder.GetRowItem(index.x + 1, index.y - 1);
     }
+    public MatrixBall GetDownLeftEvenBall()
+    {
+        return BoardManager.Instance.GetMatrixBall(GetDownLeftEvenIndex());
+    }
+    public MatrixBall GetDownRightEvenBall()
+    {
+        return BoardManager.Instance.GetMatrixBall(GetDownRightIndexEven());
+    }
     #endregion
     #region GetDownOdd
     public Vector2 GetDownRightOdd()
     {
         return BoardManager.Instance.RowHolder.GetRowItem(index.x + 1, index.y + 1);
     }
-
     public Vector2 GetDownLeftOdd()
     {
         return BoardManager.Instance.RowHolder.GetRowItem(index.x + 1, index.y);
+    }
+    public MatrixBall GetDownLeftOddBall()
+    {
+        return BoardManager.Instance.GetMatrixBall(GetDownLeftOddIndex());
+    }
+    public MatrixBall GetDownRightOddBall()
+    {
+        return BoardManager.Instance.GetMatrixBall(GetDownRightOddIndex());
     }
     #endregion
     #region GetAroundIndex
