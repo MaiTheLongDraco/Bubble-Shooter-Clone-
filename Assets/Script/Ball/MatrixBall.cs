@@ -36,6 +36,7 @@ public class MatrixBall : MonoBehaviour
     #region GetDownEven
     public Vector2 GetDownRightEven()
     {
+
         return BoardManager.Instance.RowHolder.GetRowItem(index.x + 1, index.y);
     }
     public Vector2 GetDownLeftEven()
@@ -128,10 +129,41 @@ public class MatrixBall : MonoBehaviour
     {
         return boardManager.GetBelowTargetBall(index);
     }
+    public void DestroyBelowBall()
+    {
+        GetAllBelowBall().ForEach(b => Destroy(b.gameObject));
+    }
     public List<MatrixBall> GetAllBesideBall()
     {
         return boardManager.GetBesideTargetBall(index);
     }
+    #region Check if have Ball around
+    public bool HaveDownLeftOdd()
+    {
+        return boardManager.IsListMatrixContainItem(GetAroundItem(1, 0));
+    }
+    public bool HaveDownLeftEven()
+    {
+        return boardManager.IsListMatrixContainItem(GetAroundItem(1, -1));
+    }
+    public bool HaveDownRightOdd()
+    {
+        return boardManager.IsListMatrixContainItem(GetAroundItem(1, 1));
+    }
+    public bool HaveDownRightEven()
+    {
+        return boardManager.IsListMatrixContainItem(GetAroundItem(1, 0));
+    }
+
+    public bool HaveLeft()
+    {
+        return boardManager.IsListMatrixContainItem(GetLeftBall());
+    }
+    public bool HaveRight()
+    {
+        return boardManager.IsListMatrixContainItem(GetRightBall());
+    }
+    #endregion
 }
 public enum MatrixBallType
 {

@@ -65,6 +65,17 @@ public class CheckSameType : MonoBehaviourSingleton<CheckSameType>
     {
         sameTypeBalls.Clear();
     }
+    public void MakeBelowBallFall()
+    {
+        foreach (var obj in sameTypeBalls)
+        {
+            var haveLeft = boardManager.IsListMatrixContainItem(obj.GetLeftBall());
+            var haveRight = boardManager.IsListMatrixContainItem(obj.GetRightBall());
+            if (haveLeft && haveRight)
+                return;
+            obj.DestroyBelowBall();
+        }
+    }
 
 
 }

@@ -8,15 +8,14 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
     public Vector2Int TargetID;
     public void HandlePosToAddBall(bool haveLeft, bool haveRight, RaycastHit2D hit2D, MatrixBall matrixBall)
     {
-        var test = matrixBall.GetAllBelowBall();
-        test.ForEach(b => print($"down ball {b.index}"));
-        var test1 = matrixBall.GetAllBesideBall();
-        test1.ForEach(b => print($"side ball {b.index}"));
+        if (IsNoNeedToCalculate(matrixBall))
+            return;
         var ballPos = (Vector2)hit2D.transform.position;
         if (haveLeft && haveRight)
         {
             print("have lefft and right------");
             HandleHaveLeftAndRight(hit2D, matrixBall, ballPos);
+            return;
         }
         else if (haveLeft && !haveRight)
         {
@@ -63,6 +62,8 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
     {
         if (isLeft)
         {
+            if (matrixBall.HaveLeft())
+                return matrixBall.GetRight();
             TargetID = matrixBall.GetLeftIndex();
             print($" TargetID {TargetID}");
             print("left  +++++++");
@@ -70,6 +71,8 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
         }
         else
         {
+            if (matrixBall.HaveRight())
+                return matrixBall.GetLeft();
             TargetID = matrixBall.GetRightIndex();
             print($" TargetID {TargetID}");
             print("right+++++++");
@@ -82,6 +85,8 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
         {
             if (isDownLeft)
             {
+                if (matrixBall.HaveDownLeftEven())
+                    return matrixBall.GetDownRightEven();
                 TargetID = matrixBall.GetDownLeftEvenIndex();
                 print($" TargetID {TargetID}");
                 print("down left even row +++++++");
@@ -100,6 +105,8 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
         {
             if (isDownLeft)
             {
+                if (matrixBall.HaveDownLeftOdd())
+                    return matrixBall.GetDownRightOdd();
                 TargetID = matrixBall.GetDownLeftOddIndex();
                 print("down left obb row  +++++++");
                 print($" TargetID {TargetID}");
@@ -120,5 +127,33 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
     private void AssignDesirePos(Vector2 targetPos)
     {
         desireBallPos = targetPos;
+    }
+    private bool IsNoNeedToCalculate(MatrixBall matrixBall)
+    {
+        if (matrixBall.index.x % 2 == 0)
+        {
+            var isHaveLeft = matrixBall.HaveLeft();
+            var isHaveDownLeft = matrixBall.HaveDownLeftEven();
+            var isHaveRight = matrixBall.HaveRight();
+            var isHaveDownRight = matrixBall.HaveDownRightEven();
+            if (isHaveLeft && isHaveDownLeft && isHaveRight && isHaveDownRight)
+            {
+                return true;
+            }
+            return false;
+
+        }
+        else
+        {
+            var isHaveLeft = matrixBall.HaveLeft();
+            var isHaveDownLeft = matrixBall.HaveDownLeftOdd();
+            var isHaveRight = matrixBall.HaveRight();
+            var isHaveDownRight = matrixBall.HaveDownRightOdd();
+            if (isHaveLeft && isHaveDownLeft && isHaveRight && isHaveDownRight)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

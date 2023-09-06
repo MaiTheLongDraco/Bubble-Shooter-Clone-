@@ -18,8 +18,6 @@ public class BallHolderManger : MonoBehaviour
 
     private Vector2 mainPos;
     private PredictBallPosToAdd predictBall;
-
-
     public Transform BallParent { get => ballParent; set => ballParent = value; }
 
     private void Start()
@@ -100,6 +98,7 @@ public class BallHolderManger : MonoBehaviour
         boardManager.ListMatrixBall.Add(matrixBall.GetComponent<MatrixBall>());
         checkSameType.CheckSameTypeAround(matrixBall.GetComponent<MatrixBall>());
         HandleAddBallToSameType(matrixBall.GetComponent<MatrixBall>());
+        checkSameType.MakeBelowBallFall();
         matrixBall.transform.SetParent(ballAddParent);
     }
     private GameObject HandleCreateType(MatrixBall matrixBall)
