@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 public class BallHolderManger : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class BallHolderManger : MonoBehaviour
     private PredictBallPosToAdd predictBall;
     public Transform BallParent { get => ballParent; set => ballParent = value; }
     public bool CanShoot { get => canShoot; set => canShoot = value; }
+    [SerializeField] private UnityEvent onWinGame;
 
     private void Start()
     {
@@ -92,8 +94,10 @@ public class BallHolderManger : MonoBehaviour
             listExplode.ForEach(b => Destroy(b.gameObject, 0.5f));
             boardManager.ListMatrixBall.RemoveAll(item => listExplode.Contains(item));
             listExplode.Clear();
+            // boardManager.ListMatrixBall.Clear();
             if (boardManager.IsBoardEmpty())
             {
+                onWinGame?.Invoke();
                 print("win game");
             }
         }

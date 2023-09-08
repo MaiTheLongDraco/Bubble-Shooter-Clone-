@@ -11,6 +11,7 @@ public class GameCOntroller : MonoBehaviourSingleton<GameCOntroller>
     [SerializeField] private int moveLeft;
     [SerializeField] private UnityEvent onLoseGame;
     [SerializeField] private GameObject interactPanel;
+    [SerializeField] private GameObject winGamePanel;
     [SerializeField] private Button swapButton;
 
 
@@ -62,6 +63,10 @@ public class GameCOntroller : MonoBehaviourSingleton<GameCOntroller>
     public void SetActiveInteract(bool set)
     {
         interactPanel.SetActive(set);
+    }
+    public void SetActiveWinGamePanel(bool set)
+    {
+        winGamePanel.SetActive(set);
     }
     public void SetInteractSwapBtn(bool set)
     {
