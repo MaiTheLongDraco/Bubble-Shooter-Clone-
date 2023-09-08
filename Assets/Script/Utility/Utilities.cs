@@ -45,6 +45,10 @@ public class CircularList<T> : List<T>
     {
         values.Add(item);
     }
+    public new void Remove(T item)
+    {
+        values.Remove(item);
+    }
     public void MoveNext()
     {
         if (i > values.Count - 1)

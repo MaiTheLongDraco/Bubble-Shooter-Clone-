@@ -89,10 +89,10 @@ public class BallHolderManger : MonoBehaviour
             listExplode.ForEach(b => Destroy(b.gameObject, 0.5f));
             boardManager.ListMatrixBall.RemoveAll(item => listExplode.Contains(item));
             listExplode.Clear();
-        }
-        if (boardManager.IsBoardEmpty())
-        {
-            print("win game");
+            if (boardManager.IsBoardEmpty())
+            {
+                print("win game");
+            }
         }
 
     }

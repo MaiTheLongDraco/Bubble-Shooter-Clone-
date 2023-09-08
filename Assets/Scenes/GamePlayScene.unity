@@ -14522,7 +14522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveLeftTXT: {fileID: 938230873}
   outtaMovePanel: {fileID: 1787470995}
-  moveLeft: 1
+  moveLeft: 37
   onLoseGame:
     m_PersistentCalls:
       m_Calls:
