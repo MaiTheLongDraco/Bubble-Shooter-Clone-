@@ -39,6 +39,7 @@ public class CircularList<T> : List<T>
 {
     public List<T> values = new List<T>();
     private int i = 0;
+    public int Index => i;
     public T currentItem;
     public new void Add(T item)
     {
@@ -50,7 +51,7 @@ public class CircularList<T> : List<T>
         {
             i = 0;
         }
-        i++;
+        i = (i + 1) % values.Count;
         Debug.Log($" enter move nexxt -- valuesCOunt {values.Count}");
         currentItem = values[i];
     }
@@ -58,6 +59,10 @@ public class CircularList<T> : List<T>
     {
         currentItem = values[i];
         return currentItem;
+    }
+    public void MovePrevious()
+    {
+        i = (i - 1 + values.Count) % values.Count;
     }
 
 }

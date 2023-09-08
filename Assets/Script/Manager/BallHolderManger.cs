@@ -20,6 +20,7 @@ public class BallHolderManger : MonoBehaviour
     private Vector2 mainPos;
     private PredictBallPosToAdd predictBall;
     public Transform BallParent { get => ballParent; set => ballParent = value; }
+    public bool CanShoot { get => canShoot; set => canShoot = value; }
 
     private void Start()
     {
@@ -44,6 +45,7 @@ public class BallHolderManger : MonoBehaviour
     public void SetCanShoot(bool set)
     {
         canShoot = set;
+        print($"canShoot {canShoot}");
     }
     private void CreateFirstTurnBall()
     {
@@ -156,7 +158,11 @@ public class BallHolderManger : MonoBehaviour
     }
     public void SwapBall()
     {
-
+        var i = ballShootings.Index;
+        print($"index of shooting ball {i}");
+        ballShootings.GetCurrent().transform.position = listShootingPos[i].position;
+        ballShootings.MoveNext();
+        ballShootings.GetCurrent().transform.position = mainPos;
     }
 }
 public enum BallHolderType

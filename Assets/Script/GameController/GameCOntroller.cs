@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using com.soha.bridge;
+using UnityEngine.Events;
 
 public class GameCOntroller : MonoBehaviourSingleton<GameCOntroller>
 {
     [SerializeField] private Text moveLeftTXT;
     [SerializeField] private GameObject outtaMovePanel;
     [SerializeField] private int moveLeft;
-    [SerializeField] private bool canPlay;
-
+    [SerializeField] private UnityEvent onLoseGame;
+    [SerializeField] private GameObject interactPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,6 @@ public class GameCOntroller : MonoBehaviourSingleton<GameCOntroller>
     }
     private void Init()
     {
-        canPlay = true;
         SetMoveLeftTXT(moveLeft.ToString());
     }
     private void SetMoveLeftTXT(string set)
@@ -36,7 +36,7 @@ public class GameCOntroller : MonoBehaviourSingleton<GameCOntroller>
         SetMoveLeftTXT(moveLeft.ToString());
         if (moveLeft <= 0)
         {
-            canPlay = false;
+            onLoseGame?.Invoke();
             SetActiveOutMovePanel(true);
             print("end game");
         }
@@ -44,5 +44,9 @@ public class GameCOntroller : MonoBehaviourSingleton<GameCOntroller>
     public void SetActiveOutMovePanel(bool set)
     {
         outtaMovePanel.SetActive(set);
+    }
+    public void SetActiveInteract(bool set)
+    {
+        interactPanel.SetActive(set);
     }
 }
