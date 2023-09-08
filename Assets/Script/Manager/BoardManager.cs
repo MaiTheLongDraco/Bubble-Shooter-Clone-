@@ -27,6 +27,14 @@ public class BoardManager : MonoBehaviour
     {
         return listMatrix.Find(b => b.index == target);
     }
+    public bool IsBoardEmpty()
+    {
+        if (listMatrix.Count <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
 
     public void HandleCreateBall(int number, int i, int j)
     {

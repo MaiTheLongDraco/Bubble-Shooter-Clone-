@@ -14,6 +14,7 @@ public class BallHolderManger : MonoBehaviour
     [SerializeField] private bool canShoot;
     [SerializeField] private Transform ballParent;
     [SerializeField] private Transform ballAddParent;
+    private GameCOntroller gameCOntroller => GameCOntroller.Instance;
     private CheckSameType checkSameType => CheckSameType.Instance;
 
     private Vector2 mainPos;
@@ -87,7 +88,13 @@ public class BallHolderManger : MonoBehaviour
             boardManager.ListMatrixBall.RemoveAll(item => listExplode.Contains(item));
             listExplode.Clear();
         }
+        if (boardManager.IsBoardEmpty())
+        {
+            print("win game");
+        }
+
     }
+
     private void CreateNewMatrixBall()
     {
         DestroyCurrentShootBall();
@@ -98,6 +105,7 @@ public class BallHolderManger : MonoBehaviour
         boardManager.ListMatrixBall.Add(matrixBall.GetComponent<MatrixBall>());
         checkSameType.CheckSameTypeAround(matrixBall.GetComponent<MatrixBall>());
         HandleAddBallToSameType(matrixBall.GetComponent<MatrixBall>());
+        gameCOntroller.DecreaseMovesLeft();
         // checkSameType.MakeBelowBallFall();
         matrixBall.transform.SetParent(ballAddParent);
     }
