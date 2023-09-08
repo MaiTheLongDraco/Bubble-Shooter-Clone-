@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using com.soha.bridge;
 using UnityEngine.Events;
+using System.Collections;
 
 public class GameCOntroller : MonoBehaviourSingleton<GameCOntroller>
 {
@@ -34,18 +35,29 @@ public class GameCOntroller : MonoBehaviourSingleton<GameCOntroller>
     }
     public void DecreaseMovesLeft()
     {
-        moveLeft--;
-        SetMoveLeftTXT(moveLeft.ToString());
         if (moveLeft <= 0)
         {
             onLoseGame?.Invoke();
             SetActiveOutMovePanel(true);
+            StartCoroutine(DelaySetInteractSwapBtn());
+            SetMoveLeftTXT(moveLeft.ToString());
             print("end game");
+            return;
+        }
+        else
+        {
+            moveLeft--;
+            SetMoveLeftTXT(moveLeft.ToString());
         }
     }
     public void SetActiveOutMovePanel(bool set)
     {
         outtaMovePanel.SetActive(set);
+    }
+    private IEnumerator DelaySetInteractSwapBtn()
+    {
+        yield return new WaitForSeconds(.2f);
+        SetInteractSwapBtn(false);
     }
     public void SetActiveInteract(bool set)
     {
