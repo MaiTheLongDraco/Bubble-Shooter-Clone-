@@ -14563,6 +14563,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactPanel: {fileID: 333300040}
+  swapButton: {fileID: 2128045063}
 --- !u!4 &1772293128
 Transform:
   m_ObjectHideFlags: 0

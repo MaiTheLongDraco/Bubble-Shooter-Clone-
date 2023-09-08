@@ -64,6 +64,14 @@ public class CircularList<T> : List<T>
         currentItem = values[i];
         return currentItem;
     }
+    public T GetNext()
+    {
+        return values[(i + 1) % values.Count];
+    }
+    public T GetPrev()
+    {
+        return values[(i - 1 + values.Count) % values.Count];
+    }
     public void MovePrevious()
     {
         i = (i - 1 + values.Count) % values.Count;

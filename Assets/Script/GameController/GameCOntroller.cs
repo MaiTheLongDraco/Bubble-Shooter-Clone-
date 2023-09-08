@@ -10,6 +10,8 @@ public class GameCOntroller : MonoBehaviourSingleton<GameCOntroller>
     [SerializeField] private int moveLeft;
     [SerializeField] private UnityEvent onLoseGame;
     [SerializeField] private GameObject interactPanel;
+    [SerializeField] private Button swapButton;
+
 
     // Start is called before the first frame update
     void Start()
@@ -48,5 +50,9 @@ public class GameCOntroller : MonoBehaviourSingleton<GameCOntroller>
     public void SetActiveInteract(bool set)
     {
         interactPanel.SetActive(set);
+    }
+    public void SetInteractSwapBtn(bool set)
+    {
+        swapButton.interactable = set;
     }
 }

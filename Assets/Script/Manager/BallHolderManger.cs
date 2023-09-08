@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 public class BallHolderManger : MonoBehaviour
 {
     public static BallHolderManger Instance;
@@ -14,6 +15,7 @@ public class BallHolderManger : MonoBehaviour
     [SerializeField] private bool canShoot;
     [SerializeField] private Transform ballParent;
     [SerializeField] private Transform ballAddParent;
+    [SerializeField]
     private GameCOntroller gameCOntroller => GameCOntroller.Instance;
     private CheckSameType checkSameType => CheckSameType.Instance;
 
@@ -71,6 +73,7 @@ public class BallHolderManger : MonoBehaviour
         ballShootings.GetCurrent().SetBallVelocity(targetVelocity);
         ballShootings.GetCurrent().ShowShootDirection(lineReflection.PassDir);
         print($" ballShootings.GetCurrent() {ballShootings.GetCurrent().name}");
+        gameCOntroller.SetInteractSwapBtn(false);
         ballShootings.GetCurrent().AddListenerFotHitEvent(() => CreateNewMatrixBall());
         ballShootings.GetCurrent().AddListenerFotHitEvent(() => LoadNextBall());
     }
@@ -108,6 +111,7 @@ public class BallHolderManger : MonoBehaviour
         checkSameType.CheckSameTypeAround(matrixBall.GetComponent<MatrixBall>());
         HandleAddBallToSameType(matrixBall.GetComponent<MatrixBall>());
         gameCOntroller.DecreaseMovesLeft();
+        gameCOntroller.SetInteractSwapBtn(true);
         // checkSameType.MakeBelowBallFall();
         matrixBall.transform.SetParent(ballAddParent);
     }
@@ -160,9 +164,10 @@ public class BallHolderManger : MonoBehaviour
     {
         var i = ballShootings.Index;
         print($"index of shooting ball {i}");
-        ballShootings.GetCurrent().transform.position = listShootingPos[i].position;
         ballShootings.MoveNext();
-        ballShootings.GetCurrent().transform.position = mainPos;
+        var temp = ballShootings.GetCurrent().transform.position;
+        ballShootings.GetCurrent().transform.position = ballShootings.GetNext().transform.position;
+        ballShootings.GetNext().transform.position = temp;
     }
 }
 public enum BallHolderType
