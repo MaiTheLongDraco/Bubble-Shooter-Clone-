@@ -63,7 +63,10 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
         if (isLeft)
         {
             if (matrixBall.HaveLeft())
+            {
+                TargetID = matrixBall.GetRightIndex();
                 return matrixBall.GetRight();
+            }
             TargetID = matrixBall.GetLeftIndex();
             print($" TargetID {TargetID}");
             print("left  +++++++");
@@ -72,7 +75,10 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
         else
         {
             if (matrixBall.HaveRight())
+            {
+                TargetID = matrixBall.GetLeftIndex();
                 return matrixBall.GetLeft();
+            }
             TargetID = matrixBall.GetRightIndex();
             print($" TargetID {TargetID}");
             print("right+++++++");
@@ -83,44 +89,66 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
     {
         if (matrixBall.index.x % 2 == 0)
         {
-            if (isDownLeft)
-            {
-                if (matrixBall.HaveDownLeftEven())
-                    return matrixBall.GetDownRightEven();
-                TargetID = matrixBall.GetDownLeftEvenIndex();
-                print($" TargetID {TargetID}");
-                print("down left even row +++++++");
-                return matrixBall.GetDownLeftEven();
-            }
-            else
-            {
-                TargetID = matrixBall.GetDownRightIndexEven();
-                print($" TargetID {TargetID}");
+            return PosForEvenRow(matrixBall, isDownLeft);
+        }
+        else
+            return PosForOddRow(matrixBall, isDownLeft);
+    }
 
-                print("down right even row +++++++");
-                return matrixBall.GetDownRightEven();
+    private Vector2 PosForOddRow(MatrixBall matrixBall, bool isDownLeft)
+    {
+        if (isDownLeft)
+        {
+            if (matrixBall.HaveDownLeftOdd())
+            {
+                TargetID = matrixBall.GetDownRightOddIndex();
+                return matrixBall.GetDownRightOdd();
             }
+            TargetID = matrixBall.GetDownLeftOddIndex();
+            print("down left obb row  +++++++");
+            print($" TargetID {TargetID}");
+
+            return matrixBall.GetDownLeftOdd();
         }
         else
         {
-            if (isDownLeft)
+            if (matrixBall.HaveDownRightOdd())
             {
-                if (matrixBall.HaveDownLeftOdd())
-                    return matrixBall.GetDownRightOdd();
                 TargetID = matrixBall.GetDownLeftOddIndex();
-                print("down left obb row  +++++++");
-                print($" TargetID {TargetID}");
-
                 return matrixBall.GetDownLeftOdd();
             }
-            else
-            {
-                TargetID = matrixBall.GetDownRightOddIndex();
-                print("down right obb row +++++++");
-                print($" TargetID {TargetID}");
+            TargetID = matrixBall.GetDownRightOddIndex();
+            print("down right obb row +++++++");
+            print($" TargetID {TargetID}");
+            return matrixBall.GetDownRightOdd();
+        }
+    }
 
-                return matrixBall.GetDownRightOdd();
+    private Vector2 PosForEvenRow(MatrixBall matrixBall, bool isDownLeft)
+    {
+        if (isDownLeft)
+        {
+            if (matrixBall.HaveDownLeftEven())
+            {
+                TargetID = matrixBall.GetDownRightIndexEven();
+                return matrixBall.GetDownRightEven();
             }
+            TargetID = matrixBall.GetDownLeftEvenIndex();
+            print($" TargetID {TargetID}");
+            print("down left even row +++++++");
+            return matrixBall.GetDownLeftEven();
+        }
+        else
+        {
+            if (matrixBall.HaveDownRightEven())
+            {
+                TargetID = matrixBall.GetDownLeftEvenIndex();
+                return matrixBall.GetDownLeftEven();
+            }
+            TargetID = matrixBall.GetDownRightIndexEven();
+            print($" TargetID {TargetID}");
+            print("down right even row +++++++");
+            return matrixBall.GetDownRightEven();
         }
     }
 
