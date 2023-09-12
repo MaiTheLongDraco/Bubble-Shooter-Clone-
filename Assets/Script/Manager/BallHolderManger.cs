@@ -114,6 +114,7 @@ public class BallHolderManger : MonoBehaviour
         boardManager.ListMatrixBall.Add(matrixBall.GetComponent<MatrixBall>());
         checkSameType.CheckSameTypeAround(matrixBall.GetComponent<MatrixBall>());
         HandleAddBallToSameType(matrixBall.GetComponent<MatrixBall>());
+
         gameCOntroller.DecreaseMovesLeft();
         gameCOntroller.SetInteractSwapBtn(true);
         // checkSameType.MakeBelowBallFall();

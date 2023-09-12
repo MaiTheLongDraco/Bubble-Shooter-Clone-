@@ -22,6 +22,7 @@ public class BoardManager : MonoBehaviour
     private void Start()
     {
         ReadDataFromFile(data);
+        GroupBall();
     }
     public MatrixBall GetMatrixBall(Vector2Int target)
     {
@@ -110,5 +111,12 @@ public class BoardManager : MonoBehaviour
     public List<MatrixBall> GetBesideTargetBall(Vector2Int index)
     {
         return listMatrix.FindAll(ball => ball.index.x == index.x);
+    }
+    private void GroupBall()
+    {
+        foreach (var b in listMatrix)
+        {
+            GruopFallingBall.Instance.Test(b);
+        }
     }
 }
