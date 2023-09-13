@@ -11,6 +11,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] private TextAsset data;
     [SerializeField] private GameObject ballParent;
     [SerializeField] private List<MatrixBall> listMatrix = new List<MatrixBall>();
+    [SerializeField] private List<MatrixBall> listMatrixTest = new List<MatrixBall>();
     public static BoardManager Instance;
     public List<MatrixBall> ListMatrixBall { get => listMatrix; set => listMatrix = value; }
     public RowHolder RowHolder { get => rowHolder; set => rowHolder = value; }
@@ -112,11 +113,18 @@ public class BoardManager : MonoBehaviour
     {
         return listMatrix.FindAll(ball => ball.index.x == index.x);
     }
-    private void GroupBall()
+    public void GroupBall()
     {
         foreach (var b in listMatrix)
         {
-            GruopFallingBall.Instance.Test(b);
+            FallingBallGroup.Instance.GroupBall(b);
+        }
+    }
+    public void GroupBallTest()
+    {
+        foreach (var b in listMatrixTest)
+        {
+            FallingBallGroup.Instance.GroupBall(b);
         }
     }
 }

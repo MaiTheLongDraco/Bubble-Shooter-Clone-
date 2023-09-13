@@ -178,6 +178,42 @@ public class MatrixBall : MonoBehaviour
     {
         return boardManager.IsListMatrixContainItem(GetRightBall());
     }
+    public List<MatrixBall> GetAllAroundItem()
+    {
+        List<MatrixBall> aroundItem = new List<MatrixBall>();
+        if (this.index.x % 2 == 0)
+        {
+            var UpLeftEven = this.GetUpLeftEven();
+            var UpRightEven = this.GetUpRightEven();
+            var LeftEven = this.GetLeftBall();
+            var RightEven = this.GetRightBall();
+            var downLeft = this.GetDownLeftEvenBall();
+            var downRight = this.GetDownRightEvenBall();
+            aroundItem.Add(UpLeftEven);
+            aroundItem.Add(UpRightEven);
+            aroundItem.Add(LeftEven);
+            aroundItem.Add(RightEven);
+            aroundItem.Add(downLeft);
+            aroundItem.Add(downRight);
+            print($"Even coll =====");
+        }
+        else
+        {
+            var UpLeftOdd = this.GetUpLeftOdd();
+            var UpRightOdd = this.GetUpRightOdd();
+            var LeftEven = this.GetLeftBall();
+            var RightEven = this.GetRightBall();
+            var downLeft = this.GetDownLeftOddBall();
+            var downRight = this.GetDownRightOddBall();
+            aroundItem.Add(UpLeftOdd);
+            aroundItem.Add(UpRightOdd);
+            aroundItem.Add(LeftEven);
+            aroundItem.Add(RightEven);
+            aroundItem.Add(downLeft);
+            aroundItem.Add(downRight);
+        }
+        return aroundItem;
+    }
     #endregion
 }
 public enum MatrixBallType
