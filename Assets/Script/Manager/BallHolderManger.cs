@@ -103,23 +103,31 @@ public class BallHolderManger : MonoBehaviour
         }
 
     }
-
+    private FallingBallGroup fallingBallGroup => FallingBallGroup.Instance;
     private void CreateNewMatrixBall()
     {
         DestroyCurrentShootBall();
-        var matrixBall = HandleCreateType(ballShootings.GetCurrent().GetMatrixBall());
-        matrixBall.AddComponent<CircleCollider2D>();
-        matrixBall.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        matrixBall.GetComponent<MatrixBall>().index = predictBall.TargetID;
+        GameObject matrixBall = AddRequireComponent();
         boardManager.ListMatrixBall.Add(matrixBall.GetComponent<MatrixBall>());
         checkSameType.CheckSameTypeAround(matrixBall.GetComponent<MatrixBall>());
         HandleAddBallToSameType(matrixBall.GetComponent<MatrixBall>());
-
         gameCOntroller.DecreaseMovesLeft();
         gameCOntroller.SetInteractSwapBtn(true);
         // checkSameType.MakeBelowBallFall();
         matrixBall.transform.SetParent(ballAddParent);
+        fallingBallGroup.GroupAfterShoot();
+        fallingBallGroup.MakeBallFall();
     }
+
+    private GameObject AddRequireComponent()
+    {
+        var matrixBall = HandleCreateType(ballShootings.GetCurrent().GetMatrixBall());
+        matrixBall.AddComponent<CircleCollider2D>();
+        matrixBall.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        matrixBall.GetComponent<MatrixBall>().index = predictBall.TargetID;
+        return matrixBall;
+    }
+
     private GameObject HandleCreateType(MatrixBall matrixBall)
     {
         GameObject newBall = new GameObject();

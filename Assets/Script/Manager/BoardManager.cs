@@ -37,6 +37,10 @@ public class BoardManager : MonoBehaviour
         }
         return false;
     }
+    public void RemoveFromMatrixList(MatrixBall toRemove)
+    {
+        listMatrix.Remove(toRemove);
+    }
 
     public void HandleCreateBall(int number, int i, int j)
     {

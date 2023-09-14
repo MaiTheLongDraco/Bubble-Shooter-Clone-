@@ -6,15 +6,27 @@ using System;
 public class FallingBallGroup : MonoBehaviourSingleton<FallingBallGroup>
 {
     [SerializeField] private GroupHolder groupHolder => GroupHolder.Instance;
+    [SerializeField] private BoardManager boardManager => BoardManager.Instance;
+
     // Start is called before the first frame update
     public void GroupBall(MatrixBall matrixBall)
     {
         groupHolder.GroupBall(matrixBall);
     }
+    public void GroupAfterShoot()
+    {
+        groupHolder.ClearGroup();
+        boardManager.GroupBall();
+    }
+    public void MakeBallFall()
+    {
+        groupHolder.MakeBallFall();
+    }
 }
 [Serializable]
 public class Group
 {
+    [SerializeField] private GroupHolder groupHolder => GroupHolder.Instance;
     public List<MatrixBall> fallingBalls;
     private int lowestIndex;
     public Group()

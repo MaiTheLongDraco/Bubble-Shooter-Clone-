@@ -7,10 +7,14 @@ using System.Linq;
 public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
 {
     [SerializeField] private List<Group> groups = new List<Group>();
+    private BoardManager boardManager => BoardManager.Instance;
     private int index;
+
+    public List<Group> Groups { get => groups; set => groups = value; }
+
     public Group GetCurrentGroup()
     {
-        return groups[index];
+        return Groups[index];
     }
     public void MoveNext()
     {
@@ -18,15 +22,15 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
     }
     public void RemoveItem(Group group)
     {
-        groups.Remove(group);
+        Groups.Remove(group);
     }
     public void AddNewGroup(Group group)
     {
-        groups.Add(group);
+        Groups.Add(group);
     }
     public void AddNewGroup()
     {
-        groups.Add(new Group());
+        Groups.Add(new Group());
     }
     public Group JoinGroup(List<Group> groups)
     {
@@ -40,7 +44,7 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
     private List<Group> GetListConnect(MatrixBall checkingBall)
     {
         var connetGroups = new List<Group>();
-        foreach (var g in groups)
+        foreach (var g in Groups)
         {
             if (g.HasConnectWith(checkingBall))
             {
@@ -49,7 +53,39 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
         }
         return connetGroups;
     }
+    public void ClearGroup()
+    {
+        Groups.Clear();
+    }
+    private void MakeBallFall(Group group)
+    {
+        for (int i = 0; i < groups.Count; i++)
+        {
+            if (group.fallingBalls.Any(item => groups[i].HasConnectWith(item)) && group.fallingBalls.Count != groups.Min(gr => gr.fallingBalls.Count))
+            {
+                return;
+            }
+            else
+            {
+                print("not connect with other group");
+                group.fallingBalls.ForEach(item => ControllWhenFall(item));
+                groups.Remove(group);
+            }
+        }
 
+    }
+    private void ControllWhenFall(MatrixBall matrixBall)
+    {
+        boardManager.RemoveFromMatrixList(matrixBall);
+        Destroy(matrixBall.gameObject, 1f);
+    }
+    public void MakeBallFall()
+    {
+        for (int i = 0; i < groups.Count; i++)
+        {
+            MakeBallFall(groups[i]);
+        }
+    }
     public void GroupBall(MatrixBall checkingBall)
     {
         HandleAddBallToGroup(checkingBall, GetListConnect(checkingBall));
@@ -74,16 +110,16 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
     {
         Group newGroup = new Group();
         newGroup.AddNewBall(checkingBall);
-        groups.Add(newGroup);
+        Groups.Add(newGroup);
     }
 
     private void MergeGroups(List<Group> toMerge)
     {
         foreach (var g in toMerge)
         {
-            groups.Remove(g);
+            Groups.Remove(g);
         }
-        groups.Add(JoinGroup(toMerge));
+        Groups.Add(JoinGroup(toMerge));
     }
 
     private List<MatrixBall> GetAllAroundItem(MatrixBall checkingBall)
