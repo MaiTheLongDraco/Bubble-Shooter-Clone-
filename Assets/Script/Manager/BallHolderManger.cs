@@ -16,6 +16,7 @@ public class BallHolderManger : MonoBehaviour
     [SerializeField] private bool canShoot;
     [SerializeField] private Transform ballParent;
     [SerializeField] private Transform ballAddParent;
+    [SerializeField] private Transform loadBallThreshHold;
     [SerializeField]
     private GameCOntroller gameCOntroller => GameCOntroller.Instance;
     private CheckSameType checkSameType => CheckSameType.Instance;
@@ -38,6 +39,7 @@ public class BallHolderManger : MonoBehaviour
     private void Update()
     {
         HandleShoot();
+        LoadNextBallIfOverThreshold();
     }
     private void HandleShoot()
     {
@@ -116,11 +118,17 @@ public class BallHolderManger : MonoBehaviour
         HandleAddBallToSameType(matrixBall.GetComponent<MatrixBall>());
         gameCOntroller.DecreaseMovesLeft();
         gameCOntroller.SetInteractSwapBtn(true);
-
-        // checkSameType.MakeBelowBallFall();
         matrixBall.transform.SetParent(ballAddParent);
     }
-
+    private void LoadNextBallIfOverThreshold()
+    {
+        var isOverThreshold = ballShootings.GetCurrent().transform.position.y <= loadBallThreshHold.position.y;
+        if (isOverThreshold)
+        {
+            LoadNextBall();
+            gameCOntroller.SetInteractSwapBtn(true);
+        }
+    }
     private GameObject AddRequireComponent()
     {
         var matrixBall = HandleCreateType(ballShootings.GetCurrent().GetMatrixBall());
