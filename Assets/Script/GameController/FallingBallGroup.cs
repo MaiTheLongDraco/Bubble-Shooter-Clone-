@@ -3,6 +3,7 @@ using com.soha.bridge;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using UnityEditor.Experimental.GraphView;
 public class FallingBallGroup : MonoBehaviourSingleton<FallingBallGroup>
 {
     [SerializeField] private GroupHolder groupHolder => GroupHolder.Instance;
@@ -22,13 +23,17 @@ public class FallingBallGroup : MonoBehaviourSingleton<FallingBallGroup>
     {
         groupHolder.MakeBallFall();
     }
+
 }
 [Serializable]
 public class Group
 {
     [SerializeField] private GroupHolder groupHolder => GroupHolder.Instance;
+
+    public int LowestIndex { get => lowestIndex; private set => lowestIndex = value; }
+
     public List<MatrixBall> fallingBalls;
-    private int lowestIndex;
+    [SerializeField] private int lowestIndex = 15;
     public Group()
     {
         fallingBalls = new List<MatrixBall>();
@@ -37,39 +42,27 @@ public class Group
     {
         return fallingBalls.Contains(matrixBall);
     }
-    public bool HaveConnectItem(MatrixBall matrixBall)
-    {
-        return IsHaveItem(matrixBall);
-    }
     public void AddNewBall(MatrixBall newItem)
     {
         if (IsHaveItem(newItem))
             return;
         fallingBalls.Add(newItem);
-        Debug.Log($" is new iteem null {newItem == null}");
-        if (newItem.index.x < GetLowestIndex())
+        if (newItem.index.x <= LowestIndex)
         {
-            lowestIndex = newItem.index.x;
+            LowestIndex = newItem.index.x;
         }
     }
     public void AddNewRange(List<MatrixBall> newItems)
     {
-        foreach (var i in newItems)
+        foreach (var item in newItems)
         {
-            if (fallingBalls.Contains(i))
-                return;
+            AddNewBall(item);
         }
-        fallingBalls.AddRange(newItems);
-        foreach (var item in fallingBalls)
-        {
-            if (item.index.x < GetLowestIndex())
-            {
-                lowestIndex = item.index.x;
-            }
-        }
+
     }
     public int GetLowestIndex()
     {
+        Debug.Log($"fallingBalls.Min(b => b.index.x){fallingBalls.Min(b => b.index.x)}");
         return fallingBalls.Min(b => b.index.x);
     }
 
@@ -82,9 +75,28 @@ public class Group
         }
         else return false;
     }
-
     internal void Add(MatrixBall checkingBall)
     {
         throw new NotImplementedException();
+    }
+    internal bool IsFallingBallContainItem(List<MatrixBall> matrixBalls)
+    {
+        if (matrixBalls.Count == 0) return false;
+        Debug.Log($"matrixBalls.Count {matrixBalls.Count}");
+        if (matrixBalls.Any(item => fallingBalls.Contains(item)))
+        {
+            return true;
+        }
+        else return false;
+    }
+    private bool IsAroundItemNull()
+    {
+        foreach (var obj in fallingBalls)
+        {
+            if (obj.GetAllAroundItem().Count == 0)
+                return true;
+            else return false;
+        }
+        return false;
     }
 }

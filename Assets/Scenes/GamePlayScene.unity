@@ -12069,9 +12069,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1987224061}
-        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: GroupBallTest
+      - m_Target: {fileID: 1698814323}
+        m_TargetAssemblyTypeName: GroupHolder, Assembly-CSharp
+        m_MethodName: MakeBallFall
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14488,6 +14488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groups: []
+  testList: []
 --- !u!1001 &1703775164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16610,7 +16611,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: GroupBall
+  m_Text: Check anchor
 --- !u!222 &1915957449
 CanvasRenderer:
   m_ObjectHideFlags: 0
