@@ -11,12 +11,13 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
     private BoardManager boardManager => BoardManager.Instance;
     private int index;
     public List<Group> Groups { get => groups; set => groups = value; }
-    public Group JoinGroup(List<Group> groups)
+    public Group JoinGroup(List<Group> groups, MatrixBall checkingBall)
     {
         Group joinedGr = new Group();
+        joinedGr.Add(checkingBall);
         foreach (var g in groups)
         {
-            joinedGr.AddNewRange(g.fallingBalls);
+            joinedGr.Add(g);
         }
         return joinedGr;
     }
@@ -71,28 +72,36 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
     }
     private void HandleAddBallToGroup(MatrixBall checkingBall, List<Group> toMerge)
     {
+        var ball1 = new Vector2Int(2, 8);
+        var ball2 = new Vector2Int(12, 2);
+
         if (toMerge.Count >= 2)
         {
-            MergeGroups(toMerge);
+            print($"to merge {toMerge.Count}-- checking ball {checkingBall.index}");
+            MergeGroups(toMerge, checkingBall);
         }
         else if (toMerge.Count <= 0)
         {
+            print($"to merge {toMerge.Count}-- checking ball {checkingBall.index}");
             AddNewGroup(checkingBall);
         }
         else
         {
-            toMerge[0].AddNewBall(checkingBall);
+            print($"to merge {toMerge.Count}");
+            toMerge[0].Add(checkingBall);
         }
+
     }
     private void AddNewGroup(MatrixBall checkingBall)
     {
-        Group newGroup = new Group();
-        newGroup.AddNewBall(checkingBall);
+        Group newGroup = new Group(checkingBall);
+        print($"is new group nulll {newGroup == null}");
+        newGroup.Add(checkingBall);
         Groups.Add(newGroup);
     }
-    private void MergeGroups(List<Group> toMerge)
+    private void MergeGroups(List<Group> toMerge, MatrixBall checkingBall)
     {
-        Groups.Add(JoinGroup(toMerge));
+        Groups.Add(JoinGroup(toMerge, checkingBall));
         foreach (var g in toMerge)
         {
             Groups.Remove(g);

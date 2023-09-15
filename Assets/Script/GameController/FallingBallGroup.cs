@@ -40,54 +40,46 @@ public class Group
         fallingBalls = new List<MatrixBall>();
         root = new GameObject("group____").transform;
     }
-    private bool IsHaveItem(MatrixBall matrixBall)
+    public Group(MatrixBall matrixBall)
+    {
+        fallingBalls = new List<MatrixBall>();
+        root = new GameObject("group____").transform;
+        fallingBalls.Add(matrixBall);
+    }
+    private bool HasItem(MatrixBall matrixBall)
     {
         return fallingBalls.Contains(matrixBall);
     }
-    public void AddNewBall(MatrixBall newItem)
+    public void Add(MatrixBall ball)
     {
-        if (IsHaveItem(newItem))
+        Debug.Log($" newitem index {ball.index}");
+        if (HasItem(ball))
             return;
-        fallingBalls.Add(newItem);
-        if (newItem.index.x <= LowestIndex)
+        fallingBalls.Add(ball);
+        if (ball.index.x <= LowestIndex)
         {
-            LowestIndex = newItem.index.x;
+            LowestIndex = ball.index.x;
         }
-        newItem.transform.parent = root;
-
+        ball.transform.parent = root;
     }
-    public void AddNewRange(List<MatrixBall> newItems)
+    public void Add(List<MatrixBall> newItems)
     {
         foreach (var item in newItems)
         {
-            AddNewBall(item);
+            Add(item);
         }
-
     }
-    public int GetLowestIndex()
+    public void Add(Group otherGroup)
     {
-        Debug.Log($"fallingBalls.Min(b => b.index.x){fallingBalls.Min(b => b.index.x)}");
-        return fallingBalls.Min(b => b.index.x);
+        foreach (var item in otherGroup.fallingBalls)
+        {
+            Add(item);
+        }
     }
-
     internal bool HasConnectWith(MatrixBall checkingBall)
     {
         var around = checkingBall.GetAllAroundItem();
         if (around.Any(b => fallingBalls.Contains(b)))
-        {
-            return true;
-        }
-        else return false;
-    }
-    internal void Add(MatrixBall checkingBall)
-    {
-        throw new NotImplementedException();
-    }
-    internal bool IsFallingBallContainItem(List<MatrixBall> matrixBalls)
-    {
-        if (matrixBalls.Count == 0) return false;
-        Debug.Log($"matrixBalls.Count {matrixBalls.Count}");
-        if (matrixBalls.Any(item => fallingBalls.Contains(item)))
         {
             return true;
         }
@@ -103,7 +95,6 @@ public class Group
         }
         return false;
     }
-
     public void Destroy()
     {
         GameObject.Destroy(root.gameObject);
