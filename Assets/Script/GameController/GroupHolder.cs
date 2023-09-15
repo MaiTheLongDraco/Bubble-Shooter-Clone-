@@ -64,17 +64,12 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
             // print($"groups[i].CanDrop() {groups[i].CanDrop()}");
             print($"groups.Count---!!!{groups.Count}");
             print($"lowest index of group---!!!{groups[i].LowestIndex}");
-
             if (groups[i].LowestIndex <= 0)
-            {
                 continue;
-            }
-            else
-            {
-                print($" group {i} not connect with other group---!!!");
-                groups[i].fallingBalls.ForEach(item => ControllWhenFall(item));
-                groups.Remove(groups[i]);
-            }
+            print($" group {i} not connect with other group---!!!");
+            groups[i].fallingBalls.ForEach(item => ControllWhenFall(item));
+            groups.Remove(groups[i]);
+
         }
     }
     private void ControllWhenFall(MatrixBall matrixBall)
