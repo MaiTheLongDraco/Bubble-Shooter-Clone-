@@ -12103,7 +12103,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1698814323}
         m_TargetAssemblyTypeName: GroupHolder, Assembly-CSharp
-        m_MethodName: MakeBallFall
+        m_MethodName: ChangeBallParent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14520,6 +14520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groups: []
+  groupBallContainer: {fileID: 5337095941418755706, guid: cf2db459360fc32448a9370de7ef1004, type: 3}
 --- !u!1001 &1703775164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16643,7 +16644,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Check anchor
+  m_Text: Change group ball parent
 --- !u!222 &1915957449
 CanvasRenderer:
   m_ObjectHideFlags: 0

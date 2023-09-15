@@ -34,9 +34,11 @@ public class Group
 
     public List<MatrixBall> fallingBalls;
     [SerializeField] private int lowestIndex = 15;
+    private Transform root;
     public Group()
     {
         fallingBalls = new List<MatrixBall>();
+        root = new GameObject("group____").transform;
     }
     private bool IsHaveItem(MatrixBall matrixBall)
     {
@@ -51,6 +53,8 @@ public class Group
         {
             LowestIndex = newItem.index.x;
         }
+        newItem.transform.parent = root;
+
     }
     public void AddNewRange(List<MatrixBall> newItems)
     {
@@ -98,5 +102,10 @@ public class Group
             else return false;
         }
         return false;
+    }
+
+    public void Destroy()
+    {
+        GameObject.Destroy(root.gameObject);
     }
 }
