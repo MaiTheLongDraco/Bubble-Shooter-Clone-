@@ -10,6 +10,7 @@ public class LineReflection : MonoBehaviour
     [SerializeField] private LineHandle lineHandle;
     [SerializeField] private bool isLineOn;
     [SerializeField] private GameObject border;
+    [SerializeField] private BallHolderManger ballHolderManger;
 
     public static LineReflection Instance;
     private Vector2 passDir;
@@ -26,6 +27,7 @@ public class LineReflection : MonoBehaviour
     }
     private void SwitchOnOffLine()
     {
+        if (ballHolderManger.isShooting) return;
         if (isLineOn)
         {
             FollowMouseDir();
@@ -35,7 +37,6 @@ public class LineReflection : MonoBehaviour
             lineHandle.ResetLine();
         }
     }
-
     public void SetActiveLine(bool set)
     {
         isLineOn = set;

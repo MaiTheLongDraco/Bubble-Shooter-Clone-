@@ -1045,6 +1045,7 @@ MonoBehaviour:
   lineHandle: {fileID: 1145397178}
   isLineOn: 0
   border: {fileID: 929913148}
+  ballHolderManger: {fileID: 1239046974}
 --- !u!1001 &118297969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10786,13 +10787,14 @@ MonoBehaviour:
   - {fileID: 785929805}
   - {fileID: 216053946}
   - {fileID: 1738556921}
-  targetVelocity: 800
+  targetVelocity: 600
   lineReflection: {fileID: 99134369}
   boardManager: {fileID: 0}
   canShoot: 0
   ballParent: {fileID: 1290109382}
   ballAddParent: {fileID: 1286589530}
   loadBallThreshHold: {fileID: 1201279338}
+  isShooting: 0
   onWinGame:
     m_PersistentCalls:
       m_Calls:

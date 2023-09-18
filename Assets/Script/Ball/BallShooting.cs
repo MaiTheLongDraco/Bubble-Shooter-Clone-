@@ -29,6 +29,10 @@ public class BallShooting : MonoBehaviour
     }
 
     // Update is called once per frame
+    private void Update()
+    {
+        CheckDistanceToAdd();
+    }
     public void ShowShootDirection(Vector2 shootDir)
     {
         print($" shootDIR {shootDir}");
@@ -40,22 +44,23 @@ public class BallShooting : MonoBehaviour
         ballHolderType = BallHolderType.NONE;
         this.gameObject.AddComponent<CircleCollider2D>();
     }
-    private bool IsMainBall()
-    {
-        if (ballHolderType != BallHolderType.MAINBALL)
-            return false;
-        else return true;
-    }
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
-            if (hasCollide) return;
-            Debug.Log("collide with matrix ball ]]]]]");
-            var ballIndex = other.collider.GetComponent<MatrixBall>().index;
-            Debug.Log($"collide with index {ballIndex}");
-            // this.transform.position = predictBall.DesireBallPos;
-            // transform.parent = ballHolderManger.BallParent;
+            // if (hasCollide) return;
+            // Debug.Log("collide with matrix ball ]]]]]");
+            // var ballIndex = other.collider.GetComponent<MatrixBall>().index;
+            // Debug.Log($"collide with index {ballIndex}");
+            // AddToMatrix();
+        }
+    }
+    private void CheckDistanceToAdd()
+    {
+        var thisPos = transform.position;
+        var predictPos = PredictBallPosToAdd.Instance.DesireBallPos;
+        if (Vector2.Distance(thisPos, predictPos) <= 2f)
+        {
             AddToMatrix();
         }
     }
@@ -63,16 +68,13 @@ public class BallShooting : MonoBehaviour
     {
         onHitMatrix?.Invoke();
         hasCollide = true;
-        // rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        // this.gameObject.layer = LayerMask.NameToLayer("Ball");
-        // this.gameObject.tag = "Ball";
-        // Destroy(this);
     }
 
     public void SetBallVelocity(float vel)
     {
         _velocity = vel;
     }
+
     public void AddListenerFotHitEvent(UnityAction call)
     {
         print($"ball shooting colide with  matrix ]]]]]");

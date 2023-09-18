@@ -25,6 +25,7 @@ public class BallHolderManger : MonoBehaviour
     private PredictBallPosToAdd predictBall;
     public Transform BallParent { get => ballParent; set => ballParent = value; }
     public bool CanShoot { get => canShoot; set => canShoot = value; }
+    public bool isShooting;
     [SerializeField] private UnityEvent onWinGame;
 
     private void Start()
@@ -74,7 +75,9 @@ public class BallHolderManger : MonoBehaviour
     }
     private void ShootBall()
     {
+        if (isShooting) return;
         if (!Input.GetMouseButtonUp(0)) return;
+        isShooting = true;
         ballShootings.GetCurrent().SetBallVelocity(targetVelocity);
         ballShootings.GetCurrent().ShowShootDirection(lineReflection.PassDir);
         print($" ballShootings.GetCurrent() {ballShootings.GetCurrent().name}");
@@ -118,6 +121,7 @@ public class BallHolderManger : MonoBehaviour
         gameCOntroller.DecreaseMovesLeft();
         gameCOntroller.SetInteractSwapBtn(true);
         matrixBall.transform.SetParent(ballAddParent);
+        isShooting = false;
     }
     private void LoadNextBallIfOverThreshold()
     {
