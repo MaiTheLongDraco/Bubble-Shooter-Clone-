@@ -90,7 +90,6 @@ public class BallHolderManger : MonoBehaviour
     }
     private void MakeBallExplode(List<MatrixBall> listExplode)
     {
-        // GroupHolder.Instance.TestList.Clear();
         var sameTypeCount = listExplode.Count;
         if (sameTypeCount >= 3)
         {
@@ -99,7 +98,6 @@ public class BallHolderManger : MonoBehaviour
             fallingBallGroup.MakeBallFall();
             listExplode.ForEach(b => Destroy(b.gameObject, 0.5f));
             listExplode.Clear();
-            // boardManager.ListMatrixBall.Clear();
             if (boardManager.IsBoardEmpty())
             {
                 onWinGame?.Invoke();
@@ -116,7 +114,6 @@ public class BallHolderManger : MonoBehaviour
         boardManager.ListMatrixBall.Add(matrixBall.GetComponent<MatrixBall>());
         checkSameType.CheckSameTypeAround(matrixBall.GetComponent<MatrixBall>());
         HandleAddBallToSameType(matrixBall.GetComponent<MatrixBall>());
-        fallingBallGroup.GroupBall(matrixBall.GetComponent<MatrixBall>());
         gameCOntroller.DecreaseMovesLeft();
         gameCOntroller.SetInteractSwapBtn(true);
         matrixBall.transform.SetParent(ballAddParent);

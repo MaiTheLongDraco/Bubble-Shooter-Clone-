@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using com.soha.bridge;
 using System;
+using UnityEngine.UIElements;
+using System.Linq;
 [Serializable]
 public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
 {
@@ -10,29 +12,42 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
 
     private BoardManager boardManager => BoardManager.Instance;
     private int index;
-    public List<Group> Groups { get => groups; set => groups = value; }
-    public Group JoinGroup(List<Group> groups, MatrixBall checkingBall)
+    public List<Group> GroupsHolder { get => groups; set => groups = value; }
+    public Group JoinGroup(List<Group> groups)
     {
         Group joinedGr = new Group();
-        joinedGr.Add(checkingBall);
         foreach (var g in groups)
         {
             joinedGr.Add(g);
         }
         return joinedGr;
     }
-    private List<Group> GetListConnect(MatrixBall checkingBall)
+    private List<Group> GetConnectingGroups(MatrixBall checkingBall)
     {
-        var connetGroups = new List<Group>();
-        foreach (var g in Groups)
+        List<Group> connetingGroups = FindFromExistingGroups(checkingBall);
+        if (connetingGroups.Count == 0)
+        {
+            print($"connnecting count ==0 {checkingBall.index}");
+            var newGroup = AddGroup();
+            connetingGroups.Add(newGroup);
+        }
+        return connetingGroups;
+    }
+
+    private List<Group> FindFromExistingGroups(MatrixBall checkingBall)
+    {
+        var connetingGroups = new List<Group>();
+        foreach (var g in GroupsHolder)
         {
             if (g.HasConnectWith(checkingBall))
             {
-                connetGroups.Add(g);
+                connetingGroups.Add(g);
             }
         }
-        return connetGroups;
+
+        return connetingGroups;
     }
+
     public void ChangeBallParent()
     {
         for (int i = 0; i < groups.Count; i++)
@@ -45,7 +60,7 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
 
     public void ClearGroup()
     {
-        Groups.Clear();
+        GroupsHolder.Clear();
     }
     public void MakeBallFall()
     {
@@ -63,48 +78,47 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
     }
     private void ControllWhenFall(MatrixBall matrixBall)
     {
+        print("falling");
         boardManager.RemoveFromMatrixList(matrixBall);
         Destroy(matrixBall.gameObject, 1f);
     }
     public void GroupBall(MatrixBall checkingBall)
     {
-        HandleAddBallToGroup(checkingBall, GetListConnect(checkingBall));
+        List<Group> connectingGroups = GetConnectingGroups(checkingBall);
+        AddBall(checkingBall, connectingGroups);
     }
-    private void HandleAddBallToGroup(MatrixBall checkingBall, List<Group> toMerge)
+    private void AddBall(MatrixBall checkingBall, List<Group> connectingGroups)
     {
-        var ball1 = new Vector2Int(2, 8);
-        var ball2 = new Vector2Int(12, 2);
-
-        if (toMerge.Count >= 2)
+        var connectingGroup = connectingGroups.FirstOrDefault(x => x != null);
+        connectingGroup.Add(checkingBall);
+        if (connectingGroups.Count >= 2)
         {
-            print($"to merge {toMerge.Count}-- checking ball {checkingBall.index}");
-            MergeGroups(toMerge, checkingBall);
-        }
-        else if (toMerge.Count <= 0)
-        {
-            print($"to merge {toMerge.Count}-- checking ball {checkingBall.index}");
-            AddNewGroup(checkingBall);
-        }
-        else
-        {
-            print($"to merge {toMerge.Count}");
-            toMerge[0].Add(checkingBall);
+            print($"to merge {connectingGroups.Count}-- checking ball {checkingBall.index}");
+            Merge(connectingGroups);
         }
 
     }
-    private void AddNewGroup(MatrixBall checkingBall)
+    private Group AddGroup()
     {
-        Group newGroup = new Group(checkingBall);
-        print($"is new group nulll {newGroup == null}");
-        newGroup.Add(checkingBall);
-        Groups.Add(newGroup);
+        Group group = new Group();
+        print($"is new group nulll {group == null}");
+        GroupsHolder.Add(group);
+        return group;
     }
-    private void MergeGroups(List<Group> toMerge, MatrixBall checkingBall)
+
+
+    private void Merge(List<Group> groups)
     {
-        Groups.Add(JoinGroup(toMerge, checkingBall));
+        Group mergedGroup = JoinGroup(groups);
+        GroupsHolder.Add(mergedGroup);
+        RemoveFromHolder(groups);
+    }
+
+    private void RemoveFromHolder(List<Group> toMerge)
+    {
         foreach (var g in toMerge)
         {
-            Groups.Remove(g);
+            GroupsHolder.Remove(g);
             g.Destroy();
         }
     }
