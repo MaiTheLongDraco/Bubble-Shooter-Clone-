@@ -64,6 +64,7 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
     }
     public void MakeBallFall()
     {
+        List<Group> toRemove = new List<Group>();
         for (int i = 0; i < groups.Count; i++)
         {
             // print($"groups[i].CanDrop() {groups[i].CanDrop()}");
@@ -73,8 +74,9 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
                 continue;
             print($" group {i} not connect with other group---!!!");
             groups[i].fallingBalls.ForEach(item => ControllWhenFall(item));
-            groups.Remove(groups[i]);
+            toRemove.Add(groups[i]);
         }
+        groups.RemoveAll(gr => toRemove.Any(group => groups.Contains(group)));
     }
     private void ControllWhenFall(MatrixBall matrixBall)
     {
