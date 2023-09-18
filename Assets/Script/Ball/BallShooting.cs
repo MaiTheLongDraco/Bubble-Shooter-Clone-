@@ -11,6 +11,7 @@ public class BallShooting : MonoBehaviour
     private PredictBallPosToAdd predictBall;
     private BallHolderManger ballHolderManger;
     public UnityEvent onHitMatrix;
+    private bool hasCollide;
 
     public float Velocity { get => _velocity; set => _velocity = value; }
 
@@ -49,21 +50,23 @@ public class BallShooting : MonoBehaviour
     {
         if (other.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
-            Debug.Log("collide with matrix ball");
+            if (hasCollide) return;
+            Debug.Log("collide with matrix ball ]]]]]");
             var ballIndex = other.collider.GetComponent<MatrixBall>().index;
             Debug.Log($"collide with index {ballIndex}");
-            this.transform.position = predictBall.DesireBallPos;
-            transform.parent = ballHolderManger.BallParent;
+            // this.transform.position = predictBall.DesireBallPos;
+            // transform.parent = ballHolderManger.BallParent;
             AddToMatrix();
         }
     }
     private void AddToMatrix()
     {
         onHitMatrix?.Invoke();
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        this.gameObject.layer = LayerMask.NameToLayer("Ball");
-        this.gameObject.tag = "Ball";
-        Destroy(this);
+        hasCollide = true;
+        // rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        // this.gameObject.layer = LayerMask.NameToLayer("Ball");
+        // this.gameObject.tag = "Ball";
+        // Destroy(this);
     }
 
     public void SetBallVelocity(float vel)
@@ -72,6 +75,7 @@ public class BallShooting : MonoBehaviour
     }
     public void AddListenerFotHitEvent(UnityAction call)
     {
+        print($"ball shooting colide with  matrix ]]]]]");
         onHitMatrix.AddListener(call);
     }
     public MatrixBall GetMatrixBall()

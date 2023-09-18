@@ -10786,7 +10786,7 @@ MonoBehaviour:
   - {fileID: 785929805}
   - {fileID: 216053946}
   - {fileID: 1738556921}
-  targetVelocity: 400
+  targetVelocity: 800
   lineReflection: {fileID: 99134369}
   boardManager: {fileID: 0}
   canShoot: 0
@@ -17333,7 +17333,6 @@ MonoBehaviour:
   data: {fileID: 4900000, guid: 4397e8fd4262718419ef9d9f5e81c8b4, type: 3}
   ballParent: {fileID: 1290109381}
   listMatrix: []
-  listMatrixTest: []
 --- !u!4 &1987224062
 Transform:
   m_ObjectHideFlags: 0

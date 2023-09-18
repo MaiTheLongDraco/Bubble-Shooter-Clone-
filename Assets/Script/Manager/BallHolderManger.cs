@@ -66,6 +66,7 @@ public class BallHolderManger : MonoBehaviour
     {
         if (ballShootings.Count <= 1)
         {
+            print($"create new shooting ball ]]]]]");
             var rand = Random.Range(0, listBall.Count);
             var ball = Instantiate(listBall[rand], listShootingPos[1].position, Quaternion.identity);
             ballShootings.Add(ball.GetComponent<BallShooting>());
@@ -130,6 +131,7 @@ public class BallHolderManger : MonoBehaviour
     private GameObject AddRequireComponent()
     {
         var matrixBall = HandleCreateType(ballShootings.GetCurrent().GetMatrixBall());
+        print("Creat Ball ]]]]]");
         matrixBall.AddComponent<CircleCollider2D>();
         matrixBall.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         matrixBall.GetComponent<MatrixBall>().index = predictBall.TargetID;
@@ -171,7 +173,7 @@ public class BallHolderManger : MonoBehaviour
     }
     private void LoadNextBall()
     {
-        print("ball come to tarrget poss");
+        print("ball come to tarrget poss ]]]]]");
         ballShootings.Remove(ballShootings.GetCurrent());
         ballShootings.MoveNext();
         ballShootings.GetCurrent().transform.position = mainPos;
