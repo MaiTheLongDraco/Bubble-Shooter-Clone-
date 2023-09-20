@@ -44,9 +44,85 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
         var upLimit = ballPos.y + matrixBall.GetSpriteSize().y / 18;
         var downLimit = ballPos.y - matrixBall.GetSpriteSize().y / 18;
         var isSide = hit2D.point.y < upLimit && hit2D.point.y > downLimit;
+        var isUpLeft = hit2D.point.y >= upLimit && hit2D.point.x <= ballPos.x ? true : false;
         print($"upLimit ++{upLimit}");
         print($"downLimit ++{downLimit}");
         print($"isSide ++{isSide}");
+        print($" isUpLeft {isUpLeft}");
+        CalculateUpPos(matrixBall, isUpLeft);
+        CalculateSideAndDown(hit2D, matrixBall, ballPos, isSide);
+    }
+    private void CalculateUpPos(MatrixBall matrixBall, bool isUpLeft)
+    {
+        if (isUpLeft)
+        {
+            if (IsEvenRow(matrixBall))
+            {
+                if (matrixBall.HaveUpLeftEven())
+                {
+                    TargetID = matrixBall.GetUpRighttEvenIndex();
+                    AssignDesirePos(matrixBall.GetUpRightEvenPos());
+                }
+                else
+                {
+                    TargetID = matrixBall.GetUpLeftEvenIndex();
+                    AssignDesirePos(matrixBall.GetUpLeftEvenPos());
+                }
+
+            }
+            else
+            {
+                if (matrixBall.HaveUpLeftOdd())
+                {
+                    TargetID = matrixBall.GetUpRightOddIndex();
+                    AssignDesirePos(matrixBall.GetUpRightOddPos());
+                }
+                else
+                {
+                    TargetID = matrixBall.GetUpLeftOddIndex();
+                    AssignDesirePos(matrixBall.GetUpLeftOddPos());
+                }
+            }
+        }
+        else
+        {
+            if (IsEvenRow(matrixBall))
+            {
+                if (matrixBall.HaveUpRightEven())
+                {
+                    TargetID = matrixBall.GetUpLeftEvenIndex();
+                    AssignDesirePos(matrixBall.GetUpLeftEvenPos());
+                }
+                else
+                {
+                    TargetID = matrixBall.GetUpRighttEvenIndex();
+                    AssignDesirePos(matrixBall.GetUpRightEvenPos());
+                }
+            }
+            else
+            {
+                if (matrixBall.HaveUpRightOdd())
+                {
+                    TargetID = matrixBall.GetUpLeftOddIndex();
+                    AssignDesirePos(matrixBall.GetUpLeftOddPos());
+                }
+                else
+                {
+                    TargetID = matrixBall.GetUpRightOddIndex();
+                    AssignDesirePos(matrixBall.GetUpRightOddPos());
+                }
+            }
+        }
+    }
+    private bool IsEvenRow(MatrixBall checkingBall)
+    {
+        if (checkingBall.index.x % 2 == 0)
+            return true;
+        else return false;
+    }
+
+    private void CalculateSideAndDown(RaycastHit2D hit2D, MatrixBall matrixBall, Vector2 ballPos, bool isSide)
+    {
         if (isSide)
         {
             bool isLeft = isSide && hit2D.point.x < ballPos.x ? true : false;
@@ -55,9 +131,14 @@ public class PredictBallPosToAdd : MonoBehaviourSingleton<PredictBallPosToAdd>
         }
         else
         {
+            var upLimit = ballPos.y + matrixBall.GetSpriteSize().y / 18;
+            var isUp = hit2D.point.y >= upLimit;
+            if (isUp)
+                return;
             HandleHaveLeftAndRight(hit2D, matrixBall, ballPos);
         }
     }
+
     private Vector2 CalculateSidePos(MatrixBall matrixBall, bool isLeft)
     {
         if (isLeft)

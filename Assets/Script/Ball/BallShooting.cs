@@ -7,25 +7,18 @@ public class BallShooting : MonoBehaviour
     public BallHolderType ballHolderType;
     private Rigidbody2D rb;
     [SerializeField] private float _velocity;
-    [SerializeField] private LineHandle lineHandle;
-    private PredictBallPosToAdd predictBall;
-    private BallHolderManger ballHolderManger;
     public UnityEvent onHitMatrix;
     private bool hasCollide;
-
     public float Velocity { get => _velocity; set => _velocity = value; }
 
     void Start()
     {
-        ballHolderManger = FindObjectOfType<BallHolderManger>();
-        predictBall = PredictBallPosToAdd.Instance;
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0, 0);
         rb.gravityScale = 0;
     }
     private void Awake()
     {
-        lineHandle = FindObjectOfType<LineHandle>();
     }
 
     // Update is called once per frame

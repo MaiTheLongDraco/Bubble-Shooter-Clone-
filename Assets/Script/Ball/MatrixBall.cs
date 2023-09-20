@@ -124,6 +124,14 @@ public class MatrixBall : MonoBehaviour
     {
         return BoardManager.Instance.GetMatrixBall(GetUpRighttEvenIndex());
     }
+    public Vector2 GetUpLeftEvenPos()
+    {
+        return BoardManager.Instance.RowHolder.GetRowItem(index.x - 1, index.y - 1);
+    }
+    public Vector2 GetUpRightEvenPos()
+    {
+        return BoardManager.Instance.RowHolder.GetRowItem(index.x - 1, index.y);
+    }
     #endregion
     #region GetUpOdd
     public MatrixBall GetUpLeftOdd()
@@ -134,6 +142,15 @@ public class MatrixBall : MonoBehaviour
     {
         return BoardManager.Instance.GetMatrixBall(GetUpRightOddIndex());
     }
+    public Vector2 GetUpLeftOddPos()
+    {
+        return BoardManager.Instance.RowHolder.GetRowItem(index.x - 1, index.y);
+    }
+    public Vector2 GetUpRightOddPos()
+    {
+        return BoardManager.Instance.RowHolder.GetRowItem(index.x - 1, index.y + 1);
+    }
+
     #endregion
 
     public Vector2 GetSpriteSize()
@@ -177,6 +194,22 @@ public class MatrixBall : MonoBehaviour
     public bool HaveRight()
     {
         return boardManager.IsListMatrixContainItem(GetRightBall());
+    }
+    public bool HaveUpLeftEven()
+    {
+        return boardManager.IsListMatrixContainItem(GetUpLeftEven());
+    }
+    public bool HaveUpRightEven()
+    {
+        return boardManager.IsListMatrixContainItem(GetUpRightEven());
+    }
+    public bool HaveUpLeftOdd()
+    {
+        return boardManager.IsListMatrixContainItem(GetUpLeftOdd());
+    }
+    public bool HaveUpRightOdd()
+    {
+        return boardManager.IsListMatrixContainItem(GetUpRightOdd());
     }
     public List<MatrixBall> GetAllAroundItem()
     {

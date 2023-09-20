@@ -7,7 +7,7 @@ public class BoardManager : MonoBehaviour
 {
 
     [SerializeField] private RowHolder rowHolder;
-    [SerializeField] private List<GameObject> ballTest;
+    [SerializeField] private List<GameObject> balls;
     [SerializeField] private TextAsset data;
     [SerializeField] private GameObject ballParent;
     [SerializeField] private List<MatrixBall> listMatrix = new List<MatrixBall>();
@@ -41,7 +41,7 @@ public class BoardManager : MonoBehaviour
         listMatrix.Remove(toRemove);
     }
 
-    public void HandleCreateBall(int number, int i, int j)
+    private void HandleCreateBall(int number, int i, int j)
     {
         var index = RowHolder.rows[i].intItem[j];
         var transform = RowHolder.rows[i].item_row_tranform[j].position;
@@ -56,7 +56,7 @@ public class BoardManager : MonoBehaviour
             case false: { break; }
         }
     }
-    public void ReadDataFromFile(TextAsset csv)
+    private void ReadDataFromFile(TextAsset csv)
     {
         CsvReader csvReader = new CsvReader();
         List<List<string>> csvData = csvReader.ReadCsv(csv.text);
@@ -95,7 +95,7 @@ public class BoardManager : MonoBehaviour
     }
     private void CreateBall(int ballIndex, Vector3 transform, MatrixBall matrixBall)
     {
-        var ball = Instantiate(ballTest[ballIndex], transform, Quaternion.identity);
+        var ball = Instantiate(balls[ballIndex], transform, Quaternion.identity);
         ball.AddComponent<CircleCollider2D>();
         ball.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         ball.GetComponent<MatrixBall>().index = matrixBall.index;
