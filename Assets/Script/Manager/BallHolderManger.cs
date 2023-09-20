@@ -100,7 +100,7 @@ public class BallHolderManger : MonoBehaviour
             boardManager.ListMatrixBall.RemoveAll(item => listExplode.Contains(item));
             fallingBallGroup.GroupAfterShoot();
             fallingBallGroup.MakeBallFall();
-            listExplode.ForEach(b => Destroy(b.gameObject, 0.5f));
+            listExplode.ForEach(b => Destroy(b.gameObject, 0.2f));
             listExplode.Clear();
             if (boardManager.IsBoardEmpty())
             {

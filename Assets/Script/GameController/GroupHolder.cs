@@ -2,13 +2,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using com.soha.bridge;
 using System;
-using UnityEngine.UIElements;
 using System.Linq;
+using DG.Tweening;
 [Serializable]
 public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
 {
     [SerializeField] private List<Group> groups = new List<Group>();
     [SerializeField] private GameObject groupBallContainer;
+    [SerializeField] private Transform dropPos;
+    [SerializeField] private float dropTime;
+    [SerializeField] private Ease dropAnim;
+
+
 
     private BoardManager boardManager => BoardManager.Instance;
     private int index;
@@ -82,7 +87,8 @@ public class GroupHolder : MonoBehaviourSingleton<GroupHolder>
     {
         print("falling");
         boardManager.RemoveFromMatrixList(matrixBall);
-        Destroy(matrixBall.gameObject, 1f);
+        matrixBall.transform.DOMoveY(dropPos.transform.position.y, dropTime).SetEase(dropAnim);
+        Destroy(matrixBall.gameObject, dropTime);
     }
     public void GroupBall(MatrixBall checkingBall)
     {
